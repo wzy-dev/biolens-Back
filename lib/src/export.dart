@@ -2,14 +2,21 @@ import 'package:download/download.dart';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class Export extends StatelessWidget {
+class Export extends StatefulWidget {
   const Export({Key? key, required this.products}) : super(key: key);
 
   final List<Map<String, dynamic>> products;
+
+  @override
+  State<Export> createState() => _ExportState();
+}
+
+class _ExportState extends State<Export> {
+  bool _loading = false;
 
   List<pw.Padding> _drawList(List list) {
     List<pw.Padding> result = [];
@@ -24,11 +31,15 @@ class Export extends StatelessWidget {
     return result;
   }
 
-  Future<CupertinoButton> _exportAction(
+  Future<Stream<int>> _exportAction(
       BuildContext context, List<Map<String, dynamic>?> docs) async {
-    pw.Font base = pw.Font.ttf(await rootBundle.load("arial.ttf"));
-    pw.Font bold = pw.Font.ttf(await rootBundle.load("arial-Bold.ttf"));
-    pw.Font italic = pw.Font.ttf(await rootBundle.load("arial-Italic.ttf"));
+    // pw.Font base = pw.Font.ttf(await rootBundle.load("arial.ttf"));
+    // pw.Font bold = pw.Font.ttf(await rootBundle.load("arial-Bold.ttf"));
+    // pw.Font italic = pw.Font.ttf(await rootBundle.load("arial-Italic.ttf"));
+
+    pw.Font base = await PdfGoogleFonts.robotoMedium();
+    pw.Font bold = await PdfGoogleFonts.robotoBold();
+    pw.Font italic = await PdfGoogleFonts.robotoMediumItalic();
 
     pw.ThemeData myTheme =
         pw.ThemeData.withFont(base: base, bold: bold, italic: italic);
@@ -65,7 +76,7 @@ class Export extends StatelessWidget {
                       " ${product["brand"]}",
                       style: pw.TextStyle(
                         fontStyle: pw.FontStyle.italic,
-                        fontSize: 13,
+                        fontSize: 11,
                       ),
                     ),
                   ],
@@ -74,9 +85,6 @@ class Export extends StatelessWidget {
                 pw.Text(
                   "${product["names"]["category"]} > ${product["names"]["subCategory"]}"
                       .toLowerCase(),
-                  style: pw.TextStyle(
-                    fontSize: 15,
-                  ),
                 ),
                 pw.SizedBox(height: 25),
                 pw.Column(
@@ -152,29 +160,32 @@ class Export extends StatelessWidget {
     final Uint8List pdfInBytes = await pdf.save();
     final Stream<int> stream = Stream.fromIterable(pdfInBytes.toList());
 
-    return CupertinoButton(
-      minSize: 25,
-      padding: EdgeInsets.zero,
-      onPressed: () => download(stream, "biolens_export.pdf"),
-      child: Icon(
-        CupertinoIcons.download_circle,
-        color: Theme.of(context).primaryColor,
-        size: 25,
-      ),
-    );
+    return stream;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CupertinoButton>(
-      future: _exportAction(context, products),
-      builder: (context, snapshotExport) {
-        if (snapshotExport.connectionState != ConnectionState.done) {
-          return CupertinoActivityIndicator();
-        }
-
-        return snapshotExport.data ?? CupertinoActivityIndicator();
+    return CupertinoButton(
+      minSize: 25,
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        setState(() {
+          _loading = true;
+        });
+        _exportAction(context, widget.products).then((value) {
+          setState(() {
+            _loading = false;
+          });
+          download(value, "biolens_export.pdf");
+        });
       },
+      child: _loading
+          ? CupertinoActivityIndicator()
+          : Icon(
+              CupertinoIcons.download_circle,
+              color: Theme.of(context).primaryColor,
+              size: 25,
+            ),
     );
   }
 }

@@ -111,76 +111,80 @@ class _SignInPageState extends State<SignInPage> {
       ),
       child: Padding(
         padding: EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 50,
-              child: SvgPicture.asset(
-                'assets/logo.svg',
-                semanticsLabel: 'biolens',
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Container(
-              height: 50,
-              child: CupertinoTextField(
-                onEditingComplete: () {
-                  node.nextFocus();
-                },
-                controller: _controllerMail,
-                decoration: _textInputDecoration(_errorMail),
-                prefix: Padding(
-                  child: Icon(CupertinoIcons.mail),
-                  padding: EdgeInsets.all(10),
+        child: AutofillGroup(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 50,
+                child: SvgPicture.asset(
+                  'assets/logo.svg',
+                  semanticsLabel: 'biolens',
+                  color: Theme.of(context).primaryColor,
                 ),
-                placeholder: 'Adresse mail',
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 50,
-              child: CupertinoTextField(
-                onEditingComplete: _signIn,
-                controller: _controllerPassword,
-                decoration: _textInputDecoration(_errorPassword),
-                obscureText: true,
-                prefix: Padding(
-                  child: Icon(CupertinoIcons.lock),
-                  padding: EdgeInsets.all(10),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                height: 50,
+                child: CupertinoTextField(
+                  onEditingComplete: () {
+                    node.nextFocus();
+                  },
+                  controller: _controllerMail,
+                  decoration: _textInputDecoration(_errorMail),
+                  autofillHints: [AutofillHints.email],
+                  prefix: Padding(
+                    child: Icon(CupertinoIcons.mail),
+                    padding: EdgeInsets.all(10),
+                  ),
+                  placeholder: 'Adresse mail',
                 ),
-                placeholder: 'Mot de passe',
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: double.infinity,
-              height: 55,
-              child: CupertinoButton(
-                color: Theme.of(context).primaryColor,
-                child: Text('Connexion'),
-                onPressed: _signIn,
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            CupertinoButton(
-              child: Text('Mot de passe oublié'),
-              onPressed: _resetPassword,
-            ),
-            Text(
-              _info,
-              style: TextStyle(color: CupertinoColors.activeGreen),
-            ),
-          ],
+              Container(
+                height: 50,
+                child: CupertinoTextField(
+                  onEditingComplete: _signIn,
+                  controller: _controllerPassword,
+                  decoration: _textInputDecoration(_errorPassword),
+                  obscureText: true,
+                  autofillHints: [AutofillHints.password],
+                  prefix: Padding(
+                    child: Icon(CupertinoIcons.lock),
+                    padding: EdgeInsets.all(10),
+                  ),
+                  placeholder: 'Mot de passe',
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                height: 55,
+                child: CupertinoButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text('Connexion'),
+                  onPressed: _signIn,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              CupertinoButton(
+                child: Text('Mot de passe oublié'),
+                onPressed: _resetPassword,
+              ),
+              Text(
+                _info,
+                style: TextStyle(color: CupertinoColors.activeGreen),
+              ),
+            ],
+          ),
         ),
       ),
     );

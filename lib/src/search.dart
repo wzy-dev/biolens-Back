@@ -4,6 +4,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:fuzzy/fuzzy.dart';
 
 class Search {
+  static String escape(String query) {
+    List<String> escapeList = [
+      "(",
+      ")",
+      "[",
+      "]",
+      "{",
+      "}",
+      "*",
+      "+",
+      "?",
+      ".",
+      "^",
+      "\$",
+      "|",
+      "\\"
+    ];
+
+    String result = query;
+    escapeList.forEach((escapeWord) {
+      result = result.replaceAll(escapeWord, "");
+    });
+
+    return result;
+  }
+
   static searchByName(
       {required String query,
       required AsyncSnapshot<QuerySnapshot<Object?>> snapshot}) {
@@ -26,8 +52,8 @@ class Search {
     );
 
     final fuse = Fuzzy(_searchList, options: options);
-
-    final result = fuse.search(query);
+    print(escape(query));
+    final result = fuse.search(escape(query));
 
     return result;
   }

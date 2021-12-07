@@ -17,6 +17,7 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage();
           }
+
           return StreamProduct();
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           // // Debug web only

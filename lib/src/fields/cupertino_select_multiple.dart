@@ -104,20 +104,28 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.drag_indicator,
-                      color:
-                          CupertinoTheme.of(context).textTheme.textStyle.color,
-                    ),
-                    Text(
-                      value,
-                      style: CupertinoTheme.of(context).textTheme.textStyle,
-                    )
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.drag_indicator,
+                        color: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .color,
+                      ),
+                      Expanded(
+                        child: Text(
+                          value,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: CupertinoTheme.of(context).textTheme.textStyle,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 CupertinoButton(
                   onPressed: () => _delete(id: id, name: value),
@@ -201,7 +209,7 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
   Future _showBottomModal(
       BuildContext context, Function _add, Function _delete, Function _rename) {
     return showCupertinoModalBottomSheet(
-      expand: true,
+      // expand: true,
       bounce: true,
       context: context,
       barrierColor: Color.fromRGBO(100, 100, 100, 0.5),
