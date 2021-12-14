@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Homepage extends StatefulWidget {
   Homepage(this.snapshot, {key}) : super(key: key);
@@ -29,12 +30,32 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
+  Future<String> buildNumber() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    return packageInfo.version;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Container(
-          width: 25,
+          width: 60,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FutureBuilder<String>(
+              future: buildNumber(),
+              builder: (context, snapshot) {
+                return Text(
+                    (snapshot.connectionState == ConnectionState.done &&
+                            snapshot.data != null)
+                        ? snapshot.data!
+                        : "",
+                    style: TextStyle(color: CupertinoColors.inactiveGray));
+              },
+            ),
+          ),
         ),
         middle: Padding(
           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -46,22 +67,26 @@ class _HomepageState extends State<Homepage> {
         ),
         trailing: Padding(
           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _drawExport(widget.snapshot) ?? SizedBox(),
-              SizedBox(width: 10),
-              CupertinoButton(
-                minSize: 25,
-                padding: EdgeInsets.zero,
-                onPressed: () => Navigator.of(context).pushNamed('/about'),
-                child: Icon(
-                  CupertinoIcons.info_circle,
-                  color: Theme.of(context).primaryColor,
-                  size: 25,
+          child: Container(
+            width: 60,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                _drawExport(widget.snapshot) ?? SizedBox(),
+                SizedBox(width: 10),
+                CupertinoButton(
+                  minSize: 25,
+                  padding: EdgeInsets.zero,
+                  onPressed: () => Navigator.of(context).pushNamed('/about'),
+                  child: Icon(
+                    CupertinoIcons.info_circle,
+                    color: Theme.of(context).primaryColor,
+                    size: 25,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

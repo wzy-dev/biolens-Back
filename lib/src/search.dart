@@ -40,6 +40,9 @@ class Search {
       _searchList.add({..._data, 'id': document.id});
     });
 
+    _searchList.sort(
+        (a, b) => a["name"].toLowerCase().compareTo(b["name"].toLowerCase()));
+
     var options = FuzzyOptions(
       keys: [
         WeightedKey(
@@ -52,7 +55,7 @@ class Search {
     );
 
     final fuse = Fuzzy(_searchList, options: options);
-    print(escape(query));
+
     final result = fuse.search(escape(query));
 
     return result;

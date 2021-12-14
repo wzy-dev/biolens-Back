@@ -2,17 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomCupertinoTextField extends StatelessWidget {
-  const CustomCupertinoTextField(
-      {Key? key,
-      required this.value,
-      required this.node,
-      this.onEditingComplete,
-      required this.onChanged,
-      this.controller})
-      : super(key: key);
+  const CustomCupertinoTextField({
+    Key? key,
+    required this.value,
+    this.node,
+    this.onEditingComplete,
+    required this.onChanged,
+    this.controller,
+    this.autofocus = true,
+    this.isNullable = false,
+  }) : super(key: key);
 
   final String? value;
-  final FocusScopeNode node;
+  final bool autofocus;
+  final bool isNullable;
+  final FocusScopeNode? node;
   final Function? onEditingComplete;
   final void Function(String) onChanged;
   final TextEditingController? controller;
@@ -20,7 +24,7 @@ class CustomCupertinoTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color _cursorColor(String? value) {
-      if (value?.isEmpty ?? false) {
+      if (!isNullable && (value?.isEmpty ?? false)) {
         return CupertinoColors.destructiveRed;
       } else {
         return Theme.of(context).primaryColor;
@@ -28,7 +32,7 @@ class CustomCupertinoTextField extends StatelessWidget {
     }
 
     BoxDecoration _textInputDecoration(String? value) {
-      if (value?.isEmpty ?? false) {
+      if (!isNullable && (value?.isEmpty ?? false)) {
         // If empty > Box danger
         return BoxDecoration(
           color: Color.fromRGBO(255, 0, 0, 0.05),
@@ -50,14 +54,14 @@ class CustomCupertinoTextField extends StatelessWidget {
     }
 
     return CupertinoTextField(
-      autofocus: true,
+      autofocus: autofocus,
       textCapitalization: TextCapitalization.sentences,
       controller: controller,
       onEditingComplete: () {
         if (onEditingComplete is Function) {
           onEditingComplete!();
-        } else {
-          node.nextFocus();
+        } else if (node != null) {
+          node!.nextFocus();
         }
       },
       decoration: _textInputDecoration(value),

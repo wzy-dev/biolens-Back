@@ -60,6 +60,9 @@ class _AddProductState extends State<AddProduct> {
     List<String>? precautions,
     List<String>? ingredients,
     List<String>? cookbook,
+    List<String>? tagsIds,
+    List<String>? tagsTmp,
+    String? tagPicture,
     bool save = false,
   }) {
     if (filename != null) {
@@ -118,6 +121,16 @@ class _AddProductState extends State<AddProduct> {
       _product.cookbook = cookbook;
     }
 
+    if (tagsIds != null) {
+      _product.tagsIds = tagsIds;
+    }
+
+    if (tagsTmp != null) {
+      _product.tagsTmp = tagsTmp;
+    }
+
+    _product.tagPicture = tagPicture;
+
     if (save == true) {
       if (_product.uint8List != null) {
         uploadFile(
@@ -141,16 +154,19 @@ class _AddProductState extends State<AddProduct> {
           'category': _product.categoryId,
           'subCategory': _product.subCategoryId,
           'indications': _product.indicationsIds,
+          'tags': _product.tagsIds
         },
         'names': {
           'category': _product.categoryTmp,
           'subCategory': _product.subCategoryTmp,
           'indications': _product.indicationsTmp,
+          'tags': _product.tagsTmp,
         },
         'precautions': _product.precautions,
         'ingredients': _product.ingredients,
         'cookbook': _product.cookbook,
         'editedAt': DateTime.now().millisecondsSinceEpoch,
+        'tagPicture': _product.tagPicture,
         'enabled': true,
       }).then((docRef) {
         setState(() {

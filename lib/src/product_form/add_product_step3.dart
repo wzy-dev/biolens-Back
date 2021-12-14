@@ -20,6 +20,9 @@ class AddProductStep3 extends StatefulWidget {
     List<String>? precautions,
     List<String>? ingredients,
     List<String>? cookbook,
+    List<String>? tagsIds,
+    List<String>? tagsTmp,
+    String? tagPicture,
     bool save,
   }) submit;
   final Product product;
@@ -31,8 +34,12 @@ class AddProductStep3 extends StatefulWidget {
 }
 
 class _AddProductStep3State extends State<AddProductStep3> {
+  late String? _tagPicture;
+  late TextEditingController _controllerTagPicture;
   late List<String> _indicationsIds;
   late List<String> _indicationsTmp;
+  late List<String> _tagsIds;
+  late List<String> _tagsTmp;
   late TextEditingController? _precautions;
   late TextEditingController? _ingredients;
   late TextEditingController? _cookbook;
@@ -41,8 +48,13 @@ class _AddProductStep3State extends State<AddProductStep3> {
   void initState() {
     super.initState();
 
+    _tagPicture = widget.product.tagPicture;
+    _controllerTagPicture =
+        TextEditingController(text: widget.product.tagPicture);
     _indicationsIds = widget.product.indicationsIds;
     _indicationsTmp = widget.product.indicationsTmp;
+    _tagsIds = widget.product.tagsIds;
+    _tagsTmp = widget.product.tagsTmp;
     _precautions = TextEditingController(
         text: widget.product.precautions?.join('\n') ?? null);
     _ingredients = TextEditingController(
@@ -61,9 +73,14 @@ class _AddProductStep3State extends State<AddProductStep3> {
   }
 
   void _submit() {
+    print(_tagPicture != null && _tagPicture!.isNotEmpty ? _tagPicture : null);
     widget.submit(
       indicationsIds: _indicationsIds,
       indicationsTmp: _indicationsTmp,
+      tagsIds: _tagsIds,
+      tagsTmp: _tagsTmp,
+      tagPicture:
+          _tagPicture != null && _tagPicture!.isNotEmpty ? _tagPicture : null,
       precautions: _precautions!.text
           .split('\n')
           .where((element) => element.isEmpty == false)
@@ -96,11 +113,56 @@ class _AddProductStep3State extends State<AddProductStep3> {
           child: ListView(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: CustomCupertinoFieldsGroup(
+                  title: 'Tag scanner',
+                  help:
+                      "Ajouter ici le nom du produit tel qu'il est écrit sur l'emballage",
+                  body: CustomCupertinoTextField(
+                    autofocus: false,
+                    isNullable: true,
+                    value: _tagPicture,
+                    controller: _controllerTagPicture,
+                    onChanged: (value) {
+                      setState(() {
+                        _tagPicture = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: CustomCupertinoFieldsGroup(
+                  title: 'Tags du produit',
+                  paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  body: CustomSelectMultiple(
+                    key: Key("tagsMultiple"),
+                    initialValues: _tagsTmp,
+                    initialIds: _tagsIds,
+                    enabled: true,
+                    collectionPath: 'tags',
+                    onChanged: ({
+                      List<String> ids = const [],
+                      List<String> values = const [],
+                    }) {
+                      setState(() {
+                        _tagsIds = ids;
+                        _tagsTmp = values;
+                      });
+                    },
+                  ),
+                  help: 'Maintenez un tag pour le déplacer',
+                  paddingHelp: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: CustomCupertinoFieldsGroup(
                   title: 'Indications du produit',
                   paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   body: CustomSelectMultiple(
+                    key: Key("indicationsMultiple"),
                     initialValues: _indicationsTmp,
                     initialIds: _indicationsIds,
                     enabled: true,

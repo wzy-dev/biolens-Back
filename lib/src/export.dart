@@ -33,10 +33,6 @@ class _ExportState extends State<Export> {
 
   Future<Stream<int>> _exportAction(
       BuildContext context, List<Map<String, dynamic>?> docs) async {
-    // pw.Font base = pw.Font.ttf(await rootBundle.load("arial.ttf"));
-    // pw.Font bold = pw.Font.ttf(await rootBundle.load("arial-Bold.ttf"));
-    // pw.Font italic = pw.Font.ttf(await rootBundle.load("arial-Italic.ttf"));
-
     pw.Font base = await PdfGoogleFonts.robotoMedium();
     pw.Font bold = await PdfGoogleFonts.robotoBold();
     pw.Font italic = await PdfGoogleFonts.robotoMediumItalic();

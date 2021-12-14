@@ -34,132 +34,134 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
   @override
   void initState() {
     super.initState();
+
     _listValues = widget.initialValues ?? [];
     _listIds = widget.initialIds ?? [];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    void _add({required String name, required String id}) {
-      setState(() {
-        _listIds = [..._listIds, id];
-        _listValues = [..._listValues, name];
-      });
+  void _add({required String name, required String id}) {
+    setState(() {
+      _listIds = [..._listIds, id];
+      _listValues = [..._listValues, name];
+    });
 
-      widget.onChanged(
-        ids: _listIds,
-        values: _listValues,
-      );
+    widget.onChanged(
+      ids: _listIds,
+      values: _listValues,
+    );
+  }
+
+  void _delete({required String name, required String id}) {
+    setState(() {
+      _listIds.remove(id);
+      _listValues.remove(name);
+    });
+
+    widget.onChanged(
+      ids: _listIds,
+      values: _listValues,
+    );
+  }
+
+  void _rename({required String oldName, required String newName}) {
+    setState(() {
+      int index = _listValues.indexWhere((element) => element == oldName);
+
+      if (index > -1) _listValues[index] = newName;
+    });
+
+    widget.onChanged(
+      ids: _listIds,
+      values: _listValues,
+    );
+  }
+
+  void _onReorder(before, after) {
+    if (before < after) {
+      after -= 1;
     }
 
-    void _delete({required String name, required String id}) {
-      setState(() {
-        _listIds.remove(id);
-        _listValues.remove(name);
-      });
+    setState(() {
+      final String id = _listIds.removeAt(before);
+      final String value = _listValues.removeAt(before);
 
-      widget.onChanged(
-        ids: _listIds,
-        values: _listValues,
-      );
-    }
+      _listIds.insert(after, id);
+      _listValues.insert(after, value);
+    });
+  }
 
-    void _rename({required String oldName, required String newName}) {
-      setState(() {
-        int index = _listValues.indexWhere((element) => element == oldName);
+  List<Widget> _drawList() {
+    List<Widget> _list = [];
 
-        if (index > -1) _listValues[index] = newName;
-      });
+    for (int i = 0; i < _listIds.length; i++) {
+      String id = _listIds[i];
+      String value = _listValues[i];
 
-      widget.onChanged(
-        values: _listValues,
-      );
-    }
-
-    void _onReorder(before, after) {
-      if (before < after) {
-        after -= 1;
-      }
-
-      setState(() {
-        final String id = _listIds.removeAt(before);
-        final String value = _listValues.removeAt(before);
-
-        _listIds.insert(after, id);
-        _listValues.insert(after, value);
-      });
-    }
-
-    List<Widget> _drawList() {
-      List<Widget> _list = [];
-
-      for (int i = 0; i < _listIds.length; i++) {
-        String id = _listIds[i];
-        String value = _listValues[i];
-
-        _list.add(
-          Container(
-            height: 40,
-            padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.drag_indicator,
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color,
+      _list.add(
+        Container(
+          height: 40,
+          padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.drag_indicator,
+                      color:
+                          CupertinoTheme.of(context).textTheme.textStyle.color,
+                    ),
+                    Expanded(
+                      child: Text(
+                        value,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style: CupertinoTheme.of(context).textTheme.textStyle,
                       ),
-                      Expanded(
-                        child: Text(
-                          value,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: CupertinoTheme.of(context).textTheme.textStyle,
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                CupertinoButton(
-                  onPressed: () => _delete(id: id, name: value),
-                  padding: EdgeInsets.fromLTRB(0, 0, kIsWeb ? 30 : 0, 0),
-                  alignment: Alignment.centerRight,
-                  child: Icon(
-                    CupertinoIcons.return_icon,
-                    color: CupertinoColors.systemGrey,
-                  ),
-                ),
-              ],
-            ),
-            key: ValueKey("selected" + id),
-            margin: EdgeInsets.fromLTRB(
-                0, (i > 0 ? 5 : 0), 0, (i < _listIds.length ? 5 : 0)),
-            decoration: BoxDecoration(
-              color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(6)),
-              border: Border.all(
-                color: CupertinoColors.systemGrey,
               ),
+              CupertinoButton(
+                onPressed: () => _delete(id: id, name: value),
+                padding: EdgeInsets.fromLTRB(0, 0, kIsWeb ? 30 : 0, 0),
+                alignment: Alignment.centerRight,
+                child: Icon(
+                  CupertinoIcons.return_icon,
+                  color: CupertinoColors.systemGrey,
+                ),
+              ),
+            ],
+          ),
+          // key: ValueKey("selected$id${widget.collectionPath}"),
+          key: UniqueKey(),
+          margin: EdgeInsets.fromLTRB(
+              0, (i > 0 ? 5 : 0), 0, (i < _listIds.length ? 5 : 0)),
+          decoration: BoxDecoration(
+            color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+            border: Border.all(
+              color: CupertinoColors.systemGrey,
             ),
           ),
-        );
-      }
-
-      return _list;
+        ),
+      );
     }
 
+    return _list;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
           height: (_listIds.length * 50).toDouble(),
           child: ReorderableListView(
+            key: UniqueKey(),
             primary: false,
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             children: _drawList(),
@@ -209,7 +211,7 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
   Future _showBottomModal(
       BuildContext context, Function _add, Function _delete, Function _rename) {
     return showCupertinoModalBottomSheet(
-      // expand: true,
+      expand: true,
       bounce: true,
       context: context,
       barrierColor: Color.fromRGBO(100, 100, 100, 0.5),
@@ -237,13 +239,14 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
 
 class ModalContent extends StatefulWidget {
   const ModalContent({
+    Key? key,
     required this.add,
     required this.delete,
     required this.rename,
     required this.collectionPath,
     required this.listIds,
     required this.listValues,
-  });
+  }) : super(key: key);
 
   final Function add;
   final Function delete;
@@ -259,9 +262,9 @@ class ModalContent extends StatefulWidget {
 class _ModalContentState extends State<ModalContent> {
   late TextEditingController _controllerSetter;
   String _query = '';
-  late StreamBuilder<QuerySnapshot> _stream;
   late List<String> _listIds;
   late List<String> _listValues;
+  late Stream<QuerySnapshot> _collectionStream;
 
   @override
   void initState() {
@@ -271,31 +274,17 @@ class _ModalContentState extends State<ModalContent> {
     _listIds = widget.listIds;
     _listValues = widget.listValues;
 
-    final Stream<QuerySnapshot> _collectionStream = FirebaseFirestore.instance
+    _collectionStream = FirebaseFirestore.instance
         .collection(widget.collectionPath)
         .where('enabled', isEqualTo: true)
         .orderBy('name')
         .snapshots();
-
-    _stream = StreamBuilder<QuerySnapshot>(
-        stream: _collectionStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print(snapshot);
-            return Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
-
-          return _modalContent(snapshot);
-        });
   }
 
   @override
   void didUpdateWidget(ModalContent oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     _listIds = widget.listIds;
     _listValues = widget.listValues;
   }
@@ -400,39 +389,39 @@ class _ModalContentState extends State<ModalContent> {
                         style:
                             TextStyle(color: CupertinoColors.destructiveRed)),
                     onPressed: () {
-                      CollectionReference productsCollection =
-                          FirebaseFirestore.instance.collection("products");
+                      // CollectionReference productsCollection =
+                      //     FirebaseFirestore.instance.collection("products");
 
-                      productsCollection
-                          .where("ids.indications", arrayContains: id)
-                          .get()
-                          .then((value) {
-                        value.docs.forEach((DocumentSnapshot document) {
-                          productsCollection
-                              .doc(document.id)
-                              .update({"ids.indications": _listIds});
+                      // productsCollection
+                      //     .where("ids.indications", arrayContains: id)
+                      //     .get()
+                      //     .then((value) {
+                      //   value.docs.forEach((DocumentSnapshot document) {
+                      //     productsCollection
+                      //         .doc(document.id)
+                      //         .update({"ids.indications": _listIds});
 
-                          productsCollection
-                              .doc(document.id)
-                              .update({"names.indications": _listValues});
-                        });
+                      //     productsCollection
+                      //         .doc(document.id)
+                      //         .update({"names.indications": _listValues});
+                      //   });
 
-                        CollectionReference collection = FirebaseFirestore
-                            .instance
-                            .collection(widget.collectionPath);
+                      CollectionReference collection = FirebaseFirestore
+                          .instance
+                          .collection(widget.collectionPath);
 
-                        collection
-                            .doc(id)
-                            .update({
-                              'enabled': false,
-                              'editedAt': DateTime.now().millisecondsSinceEpoch,
-                            })
-                            .then((name) => print("Option Removed"))
-                            .catchError((error) =>
-                                print("Failed to update option: $error"));
-                      });
+                      collection
+                          .doc(id)
+                          .update({
+                            'enabled': false,
+                            'editedAt': DateTime.now().millisecondsSinceEpoch,
+                          })
+                          .then((name) => print("Option Removed"))
+                          .catchError((error) =>
+                              print("Failed to update option: $error"));
+                      // });
 
-                      widget.delete(name: name, id: id);
+                      // widget.delete(name: name, id: id);
 
                       Navigator.of(context).pop();
                     }),
@@ -442,7 +431,37 @@ class _ModalContentState extends State<ModalContent> {
 
   @override
   Widget build(BuildContext context) {
-    return _stream;
+    return StreamBuilder<QuerySnapshot>(
+        stream: _collectionStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return _modalContent(snapshot);
+        });
+  }
+
+  void _touchAction({required String name, required String id}) {
+    Iterable<String> idWhere = _listIds.where((element) => element == id);
+    if (idWhere.length > 0) {
+      widget.delete(name: name, id: id);
+
+      setState(() {
+        _listIds.remove(id);
+        _listValues.remove(name);
+      });
+    } else {
+      widget.add(name: name, id: id);
+      setState(() {
+        _listIds = [..._listIds, id];
+        _listValues = [..._listValues, name];
+      });
+    }
   }
 
   Widget _itemBuilder(entry, int endIndex) {
@@ -455,11 +474,9 @@ class _ModalContentState extends State<ModalContent> {
         name: document['name'],
         renameAction: _renameAction,
         removeAction: _removeAction,
-        key: ValueKey("option" + document['id']),
-        add: widget.add,
-        delete: widget.delete,
         rename: widget.rename,
-        enabled: _listIds.contains(document['id']) ? true : false,
+        enabled: _listIds.contains(document['id']),
+        touchAction: _touchAction,
       ),
       (index + 1 < endIndex)
           ? Divider(

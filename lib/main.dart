@@ -3,6 +3,7 @@ import 'package:biolensback/src/landing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
@@ -10,6 +11,12 @@ void main() {
   configureApp();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
+
+  //For Navigation bar
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarIconBrightness: Brightness.light,
+    statusBarColor: Color.fromARGB(0, 0, 0, 0),
+  ));
 }
 
 class App extends StatefulWidget {

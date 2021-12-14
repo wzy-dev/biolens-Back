@@ -41,6 +41,9 @@ class _EditProductState extends State<EditProduct> {
     _product.precautions = List<String>.from(widget.product['precautions']);
     _product.ingredients = List<String>.from(widget.product['ingredients']);
     _product.cookbook = List<String>.from(widget.product['cookbook']);
+    _product.tagsTmp = List<String>.from(widget.product['names']['tags'] ?? []);
+    _product.tagsIds = List<String>.from(widget.product['ids']['tags'] ?? []);
+    _product.tagPicture = widget.product['tagPicture'];
 
     super.initState();
   }
@@ -86,6 +89,9 @@ class _EditProductState extends State<EditProduct> {
     precautions,
     ingredients,
     cookbook,
+    tagsIds,
+    tagsTmp,
+    tagPicture,
     save = false,
   }) {
     if (filename != null) {
@@ -144,6 +150,16 @@ class _EditProductState extends State<EditProduct> {
       _product.cookbook = cookbook;
     }
 
+    if (tagsIds != null) {
+      _product.tagsIds = tagsIds;
+    }
+
+    if (tagsTmp != null) {
+      _product.tagsTmp = tagsTmp;
+    }
+
+    _product.tagPicture = tagPicture;
+
     if (save == true) {
       if (_product.uint8List != null) {
         uploadFile(
@@ -171,16 +187,19 @@ class _EditProductState extends State<EditProduct> {
             'category': _product.categoryId,
             'subCategory': _product.subCategoryId,
             'indications': _product.indicationsIds,
+            'tags': _product.tagsIds
           },
           'names': {
             'category': _product.categoryTmp,
             'subCategory': _product.subCategoryTmp,
             'indications': _product.indicationsTmp,
+            'tags': _product.tagsTmp,
           },
           'precautions': _product.precautions,
           'ingredients': _product.ingredients,
           'cookbook': _product.cookbook,
           'editedAt': DateTime.now().millisecondsSinceEpoch,
+          'tagPicture': _product.tagPicture,
         }).then((docRef) {
           setState(() {
             _completeSubmit = widget.product['id'];

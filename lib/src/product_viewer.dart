@@ -99,11 +99,8 @@ class ProductViewer extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.end,
             children: [
               Text(
-                product['name'].toUpperCase(),
+                "${product['name'].toUpperCase()} ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              SizedBox(
-                width: 8,
               ),
               Text(
                 product['brand'],
@@ -228,6 +225,28 @@ class ProductViewer extends StatelessWidget {
                   ),
                   Text(
                     'Utilisation :'.toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            _drawList(
+              product['tagPicture'] != null ? [product['tagPicture']] : null,
+              title: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.camera_on_rectangle,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text(
+                    'Tag scanner :'.toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

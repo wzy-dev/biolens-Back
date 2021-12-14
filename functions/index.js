@@ -58,3 +58,23 @@ export const updateIndication = region("europe-west1").firestore.document("/indi
           }),
       );
     });
+
+export const updateTag = region("europe-west1").firestore.document("/tags/{tagId}")
+    .onUpdate(async (change, context) => {
+      const data = change.after.data();
+      const products = await db.collection("products").where("ids.tags", "array-contains", context.params.tagId).get();
+
+      return await Promise.all(
+          products.docs.map((product) => {
+            const dataDoc = product.data();
+            const indicationIndex = dataDoc.ids.tags.findIndex((elm) => elm == context.params.tagId);
+            const names = dataDoc.names.tags;
+            names[indicationIndex]=data.name;
+
+            const docRef = db.collection("products").doc(product.id);
+            docRef.update({
+              "names.tags": names,
+            });
+          }),
+      );
+    });
