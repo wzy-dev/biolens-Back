@@ -78,7 +78,7 @@ class _HomepageState extends State<Homepage> {
                 CupertinoButton(
                   minSize: 25,
                   padding: EdgeInsets.zero,
-                  onPressed: () => Navigator.of(context).pushNamed('/about'),
+                  onPressed: () => Navigator.of(context).pushNamed('/privacy'),
                   child: Icon(
                     CupertinoIcons.info_circle,
                     color: Theme.of(context).primaryColor,

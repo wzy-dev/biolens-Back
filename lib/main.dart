@@ -70,11 +70,8 @@ class _AppState extends State<App> {
           ),
         ),
         routes: {
-          // '/export': (context) => Export(
-          //       products: [],
-          //     ),
+          // '/about': (context) => About(),
           '/add': (context) => AddProduct(),
-          '/about': (context) => About(),
           '/viewer': (context) => ProductViewer(),
           '/privacy': (context) => Privacy(),
         },

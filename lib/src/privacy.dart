@@ -9,7 +9,7 @@ class Privacy extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         middle: Text(
           "Contact et confidentialité",
         ),
@@ -22,7 +22,7 @@ class Privacy extends StatelessWidget {
             AnswerBlock(
               answer: "À quoi sert biolens ?",
               replies: [
-                "L'application biolens a été développée dans le cadre d'une thèse d'exercice à la faculté de chirurgie-dentaire de Nantes.",
+                "L'application biolens a été développée dans le cadre d'une thèse d'exercice à la faculté de chirurgie-dentaire de Nantes par Simon Wegrzyn et enrichie par Alexandre Prat.",
                 "Cette dernière a pour but de fournir aux étudiants en odontologie un outils pédagogique et pratique afin d'utiliser au mieux les différents biomatériaux et produits mis à leur disposition.",
               ],
             ),
@@ -73,6 +73,17 @@ class Privacy extends StatelessWidget {
                             color: CupertinoColors.white,
                             size: 50,
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "wegrzyn.simon@gmail.com",
+                            style: TextStyle(
+                              color: CupertinoColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -97,6 +108,17 @@ class Privacy extends StatelessWidget {
                             CupertinoIcons.phone,
                             color: CupertinoColors.white,
                             size: 50,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "06 20 90 51 77",
+                            style: TextStyle(
+                              color: CupertinoColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),

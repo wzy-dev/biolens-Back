@@ -15,7 +15,7 @@ class ProductViewer extends StatelessWidget {
     final RouteArgs? routeArgs =
         ModalRoute.of(context)!.settings.arguments as RouteArgs;
     final ProductViewerArguments? arguments =
-        routeArgs?.arguments as ProductViewerArguments;
+        routeArgs?.arguments as ProductViewerArguments?;
     final Map? productArg = arguments?.product ?? null;
     final String? idParam = routeArgs?.parameter;
 

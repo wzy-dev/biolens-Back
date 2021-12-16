@@ -81,6 +81,7 @@ class _AddProductStep1State extends State<AddProductStep1> {
         file: _file,
         name: _name,
         brand: _brand);
+
     Navigator.of(context).push(
       CupertinoPageRoute(
           builder: (context) =>

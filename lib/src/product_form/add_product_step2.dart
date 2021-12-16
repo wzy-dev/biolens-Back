@@ -70,6 +70,7 @@ class _AddProductStep2State extends State<AddProductStep2> {
       subCategoryId: _subCategoryId,
       subCategoryTmp: _subCategoryTmp,
     );
+
     Navigator.of(context).push(
       CupertinoPageRoute(
           builder: (context) =>

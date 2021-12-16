@@ -4,6 +4,7 @@ import 'package:biolensback/shelf.dart';
 import 'package:biolensback/src/fields/cupertino_select_multiple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
 class AddProductStep3 extends StatefulWidget {
   final void Function({
@@ -43,6 +44,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
   late TextEditingController? _precautions;
   late TextEditingController? _ingredients;
   late TextEditingController? _cookbook;
+  final HtmlEditorController controller = HtmlEditorController();
 
   @override
   void initState() {
@@ -73,14 +75,12 @@ class _AddProductStep3State extends State<AddProductStep3> {
   }
 
   void _submit() {
-    print(_tagPicture != null && _tagPicture!.isNotEmpty ? _tagPicture : null);
     widget.submit(
       indicationsIds: _indicationsIds,
       indicationsTmp: _indicationsTmp,
       tagsIds: _tagsIds,
       tagsTmp: _tagsTmp,
-      tagPicture:
-          _tagPicture != null && _tagPicture!.isNotEmpty ? _tagPicture : null,
+      tagPicture: _tagPicture,
       precautions: _precautions!.text
           .split('\n')
           .where((element) => element.isEmpty == false)
@@ -246,9 +246,50 @@ class _AddProductStep3State extends State<AddProductStep3> {
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: Container(
                   width: double.infinity,
+                  height: 200,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                      border: Border.all(
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      color: CupertinoColors.black),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: HtmlEditor(
+                      controller: controller,
+                      callbacks: Callbacks(
+                        onInit: () {
+                          controller.setFullScreen();
+                        },
+                      ),
+                      htmlEditorOptions: HtmlEditorOptions(
+                        adjustHeightForKeyboard: true,
+                        hint: "",
+                        darkMode: true,
+                      ),
+                      htmlToolbarOptions: HtmlToolbarOptions(
+                          textStyle: TextStyle(color: CupertinoColors.white),
+                          buttonColor: CupertinoColors.white,
+                          defaultToolbarButtons: [
+                            FontButtons(clearAll: false)
+                          ]),
+                      otherOptions: OtherOptions(
+                        decoration: BoxDecoration(color: CupertinoColors.black),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: Container(
+                  width: double.infinity,
                   child: CupertinoButton(
                     child: Text('Suivant'),
-                    onPressed: _submit,
+                    // onPressed: _submit,
+                    onPressed: () =>
+                        controller.getText().then((value) => print(value)),
                     color: Theme.of(context).primaryColor,
                   ),
                 ),

@@ -129,7 +129,9 @@ class _AddProductState extends State<AddProduct> {
       _product.tagsTmp = tagsTmp;
     }
 
-    _product.tagPicture = tagPicture;
+    if (tagPicture != null) {
+      _product.tagPicture = tagPicture.isNotEmpty ? tagPicture : null;
+    }
 
     if (save == true) {
       if (_product.uint8List != null) {

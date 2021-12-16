@@ -99,7 +99,7 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             CupertinoButton(
               padding: EdgeInsets.zero,
-              onPressed: () => Navigator.of(context).pushNamed('/about'),
+              onPressed: () => Navigator.of(context).pushNamed('/privacy'),
               child: Icon(
                 CupertinoIcons.info_circle,
                 color: Theme.of(context).primaryColor,
