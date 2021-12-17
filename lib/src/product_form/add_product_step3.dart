@@ -5,6 +5,8 @@ import 'package:biolensback/src/fields/cupertino_select_multiple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:tuple/tuple.dart';
 
 class AddProductStep3 extends StatefulWidget {
   final void Function({
@@ -44,7 +46,10 @@ class _AddProductStep3State extends State<AddProductStep3> {
   late TextEditingController? _precautions;
   late TextEditingController? _ingredients;
   late TextEditingController? _cookbook;
-  final HtmlEditorController controller = HtmlEditorController();
+  quill.QuillController _controller = quill.QuillController.basic();
+  final ScrollController _listViewController = ScrollController();
+
+  // final HtmlEditorController controller = HtmlEditorController();
 
   @override
   void initState() {
@@ -102,6 +107,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: CupertinoPageScaffold(
+        resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
           middle: Text('Informations'),
           trailing: Text(
@@ -111,6 +117,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
         ),
         child: SafeArea(
           child: ListView(
+            controller: _listViewController,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -242,11 +249,48 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   help: 'Sautez une ligne entre les étapes',
                 ),
               ),
+              // Padding(
+              //   padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+              //   child: Container(
+              //     width: double.infinity,
+              //     height: 200,
+              //     clipBehavior: Clip.hardEdge,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.all(Radius.circular(6)),
+              //         border: Border.all(
+              //           color: CupertinoColors.systemGrey,
+              //         ),
+              //         color: CupertinoColors.black),
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(bottom: 15),
+              //       child: HtmlEditor(
+              //         controller: controller,
+              //         callbacks: Callbacks(
+              //           onInit: () {
+              //             controller.setFullScreen();
+              //           },
+              //         ),
+              //         htmlEditorOptions: HtmlEditorOptions(
+              //           adjustHeightForKeyboard: true,
+              //           hint: "",
+              //           darkMode: true,
+              //         ),
+              //         htmlToolbarOptions: HtmlToolbarOptions(
+              //             textStyle: TextStyle(color: CupertinoColors.white),
+              //             buttonColor: CupertinoColors.white,
+              //             defaultToolbarButtons: [
+              //               FontButtons(clearAll: false)
+              //             ]),
+              //         otherOptions: OtherOptions(
+              //           decoration: BoxDecoration(color: CupertinoColors.black),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: Container(
-                  width: double.infinity,
-                  height: 200,
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -254,30 +298,69 @@ class _AddProductStep3State extends State<AddProductStep3> {
                         color: CupertinoColors.systemGrey,
                       ),
                       color: CupertinoColors.black),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: HtmlEditor(
-                      controller: controller,
-                      callbacks: Callbacks(
-                        onInit: () {
-                          controller.setFullScreen();
+                  child: Column(
+                    children: [
+                      quill.QuillEditor(
+                        onTapDown: (TapDownDetails tapDetails,
+                            TextPosition Function(Offset) positions) {
+                          Future.delayed(
+                            Duration(milliseconds: 350),
+                            () => _listViewController.animateTo(
+                              _listViewController.position.maxScrollExtent,
+                              duration: Duration(milliseconds: 100),
+                              curve: Curves.linear,
+                            ),
+                          );
+                          //tapDetails.globalPosition.dy + 50
+
+                          return false;
                         },
+                        minHeight: 200,
+                        customStyles: quill.DefaultStyles(
+                          paragraph: quill.DefaultTextBlockStyle(
+                            TextStyle(color: CupertinoColors.white),
+                            const Tuple2(16, 0),
+                            const Tuple2(0, 0),
+                            null,
+                          ),
+                        ),
+                        focusNode: FocusNode(),
+                        scrollable: true,
+                        autoFocus: false,
+                        expands: false,
+                        padding: const EdgeInsets.all(0),
+                        scrollController: ScrollController(),
+                        controller: _controller,
+                        readOnly: false,
                       ),
-                      htmlEditorOptions: HtmlEditorOptions(
-                        adjustHeightForKeyboard: true,
-                        hint: "",
-                        darkMode: true,
+                      quill.QuillToolbar.basic(
+                        locale: Locale('fr'),
+                        // iconTheme: quill.QuillIconTheme(co),
+                        showBoldButton: true,
+                        controller: _controller,
+                        showColorButton: false,
+                        showBackgroundColorButton: false,
+                        showCameraButton: false,
+                        showAlignmentButtons: false,
+                        showCenterAlignment: false,
+                        showClearFormat: false,
+                        showCodeBlock: false,
+                        showDividers: false,
+                        showHeaderStyle: false,
+                        showHistory: false,
+                        showHorizontalRule: false,
+                        showImageButton: false,
+                        showItalicButton: false,
+                        showUnderLineButton: false,
+                        showInlineCode: false,
+                        showListCheck: false,
+                        showQuote: false,
+                        showLink: false,
+                        showIndent: false,
+                        showStrikeThrough: false,
+                        showVideoButton: false,
                       ),
-                      htmlToolbarOptions: HtmlToolbarOptions(
-                          textStyle: TextStyle(color: CupertinoColors.white),
-                          buttonColor: CupertinoColors.white,
-                          defaultToolbarButtons: [
-                            FontButtons(clearAll: false)
-                          ]),
-                      otherOptions: OtherOptions(
-                        decoration: BoxDecoration(color: CupertinoColors.black),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ),
@@ -287,9 +370,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   width: double.infinity,
                   child: CupertinoButton(
                     child: Text('Suivant'),
-                    // onPressed: _submit,
-                    onPressed: () =>
-                        controller.getText().then((value) => print(value)),
+                    onPressed: _submit,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),

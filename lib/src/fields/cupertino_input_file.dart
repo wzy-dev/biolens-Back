@@ -57,7 +57,7 @@ class _CupertinoInputFileState extends State<CupertinoInputFile> {
   }
 
   _imgFromGallery() async {
-    PickedFile? image = await ImagePicker().getImage(
+    XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 80,
       maxHeight: 800,
