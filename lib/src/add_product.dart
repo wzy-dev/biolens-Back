@@ -60,6 +60,7 @@ class _AddProductState extends State<AddProduct> {
     List<String>? precautions,
     List<String>? ingredients,
     List<String>? cookbook,
+    List<dynamic>? cookbookString,
     List<String>? tagsIds,
     List<String>? tagsTmp,
     String? tagPicture,
@@ -121,6 +122,10 @@ class _AddProductState extends State<AddProduct> {
       _product.cookbook = cookbook;
     }
 
+    if (cookbookString != null) {
+      _product.cookbookString = cookbookString;
+    }
+
     if (tagsIds != null) {
       _product.tagsIds = tagsIds;
     }
@@ -167,6 +172,7 @@ class _AddProductState extends State<AddProduct> {
         'precautions': _product.precautions,
         'ingredients': _product.ingredients,
         'cookbook': _product.cookbook,
+        'cookbookString': _product.cookbookString,
         'editedAt': DateTime.now().millisecondsSinceEpoch,
         'tagPicture': _product.tagPicture,
         'enabled': true,

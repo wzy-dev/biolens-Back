@@ -2,7 +2,6 @@ import 'package:biolensback/shelf.dart';
 import 'package:biolensback/src/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);

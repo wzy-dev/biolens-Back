@@ -16,6 +16,7 @@ class Product {
   List<String>? precautions;
   List<String>? ingredients;
   List<String>? cookbook;
+  List<dynamic>? cookbookString;
   List<String> tagsIds;
   List<String> tagsTmp;
   String? tagPicture;
@@ -34,6 +35,7 @@ class Product {
     this.precautions,
     this.ingredients,
     this.cookbook,
+    this.cookbookString,
     this.tagsIds = const [],
     this.tagsTmp = const [],
     this.tagPicture,

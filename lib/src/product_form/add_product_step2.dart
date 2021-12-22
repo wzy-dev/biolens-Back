@@ -20,6 +20,7 @@ class AddProductStep2 extends StatefulWidget {
     List<String>? precautions,
     List<String>? ingredients,
     List<String>? cookbook,
+    List<dynamic>? cookbookString,
     List<String>? tagsIds,
     List<String>? tagsTmp,
     String? tagPicture,

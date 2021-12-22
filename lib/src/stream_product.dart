@@ -1,7 +1,6 @@
 import 'package:biolensback/shelf.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class StreamProduct extends StatelessWidget {
   const StreamProduct({Key? key}) : super(key: key);

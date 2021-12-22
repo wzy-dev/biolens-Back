@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/animation.dart';
 
 class CustomScaleTransition extends StatefulWidget {
   final Widget widget;
