@@ -151,10 +151,6 @@ class _EditProductState extends State<EditProduct> {
       _product.cookbook = cookbook;
     }
 
-    if (cookbookString != null) {
-      _product.cookbookString = cookbookString;
-    }
-
     if (tagsIds != null) {
       _product.tagsIds = tagsIds;
     }
@@ -205,7 +201,6 @@ class _EditProductState extends State<EditProduct> {
           'precautions': _product.precautions,
           'ingredients': _product.ingredients,
           'cookbook': _product.cookbook,
-          'cookbookString': _product.cookbookString,
           'editedAt': DateTime.now().millisecondsSinceEpoch,
           'tagPicture': _product.tagPicture,
         }).then((docRef) {

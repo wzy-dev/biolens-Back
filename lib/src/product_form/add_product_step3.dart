@@ -4,9 +4,6 @@ import 'package:biolensback/shelf.dart';
 import 'package:biolensback/src/fields/cupertino_select_multiple.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:tuple/tuple.dart';
 
 class AddProductStep3 extends StatefulWidget {
   final void Function({
@@ -47,16 +44,10 @@ class _AddProductStep3State extends State<AddProductStep3> {
   late TextEditingController? _precautions;
   late TextEditingController? _ingredients;
   late TextEditingController? _cookbook;
-  late final quill.QuillController _controller;
-  final ScrollController _listViewController = ScrollController();
-  late final FocusNode _usageFocus;
 
   @override
   void initState() {
     super.initState();
-
-    _usageFocus = FocusNode();
-    _controller = quill.QuillController.basic();
 
     _tagPicture = widget.product.tagPicture;
     _controllerTagPicture =
@@ -71,13 +62,6 @@ class _AddProductStep3State extends State<AddProductStep3> {
         text: widget.product.ingredients?.join('\n') ?? null);
     _cookbook = TextEditingController(
         text: widget.product.cookbook?.join('\n') ?? null);
-
-    quill.Delta delta = quill.Delta();
-    for (var i = 0; i < widget.product.cookbook!.length; i++) {
-      delta.insert(widget.product.cookbook![i]);
-      delta.insert('\n');
-    }
-    _controller.document.compose(delta, quill.ChangeSource.LOCAL);
   }
 
   @override
@@ -90,7 +74,6 @@ class _AddProductStep3State extends State<AddProductStep3> {
   }
 
   void _submit() {
-    print(_controller.document.toDelta().toJson());
     widget.submit(
       indicationsIds: _indicationsIds,
       indicationsTmp: _indicationsTmp,
@@ -105,12 +88,10 @@ class _AddProductStep3State extends State<AddProductStep3> {
           .split('\n')
           .where((element) => element.isEmpty == false)
           .toList(),
-      // cookbook: _cookbook!.text
-      //     .split('\n')
-      //     .where((element) => element.isEmpty == false)
-      //     .toList(),
-      cookbookString:
-          _controller.document.toDelta().toJson() as List<Map<String, dynamic>>,
+      cookbook: _cookbook!.text
+          .split('\n')
+          .where((element) => element.isEmpty == false)
+          .toList(),
       save: true,
     );
   }
@@ -130,7 +111,6 @@ class _AddProductStep3State extends State<AddProductStep3> {
         ),
         child: SafeArea(
           child: ListView(
-            controller: _listViewController,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -260,105 +240,6 @@ class _AddProductStep3State extends State<AddProductStep3> {
                     style: TextStyle(height: 1.5),
                   ),
                   help: 'Sautez une ligne entre les étapes',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Mode d\'emploi du produit',
-                  body: Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                        border: Border.all(
-                          color: CupertinoColors.systemGrey,
-                        ),
-                        color:
-                            CupertinoTheme.of(context).scaffoldBackgroundColor),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          quill.QuillEditor(
-                            onTapDown: (TapDownDetails tapDetails,
-                                TextPosition Function(Offset) positions) {
-                              Future.delayed(
-                                Duration(milliseconds: 350),
-                                () => _listViewController.animateTo(
-                                  _listViewController.position.maxScrollExtent,
-                                  duration: Duration(milliseconds: 100),
-                                  curve: Curves.linear,
-                                ),
-                              );
-
-                              return false;
-                            },
-                            minHeight: 200,
-                            customStyles: quill.DefaultStyles(
-                              paragraph: quill.DefaultTextBlockStyle(
-                                CupertinoTheme.of(context).textTheme.textStyle,
-                                const Tuple2(5, 5),
-                                const Tuple2(0, 0),
-                                null,
-                              ),
-                              leading: quill.DefaultTextBlockStyle(
-                                CupertinoTheme.of(context).textTheme.textStyle,
-                                const Tuple2(0, 16),
-                                const Tuple2(0, 0),
-                                null,
-                              ),
-                            ),
-                            focusNode: _usageFocus,
-                            scrollable: true,
-                            autoFocus: false,
-                            expands: false,
-                            padding: const EdgeInsets.all(0),
-                            scrollController: ScrollController(),
-                            controller: _controller,
-                            readOnly: false,
-                          ),
-                          quill.QuillToolbar.basic(
-                            locale: Locale('fr'),
-                            iconTheme: quill.QuillIconTheme(
-                              iconUnselectedColor: CupertinoColors.white,
-                              iconUnselectedFillColor: Color.fromRGBO(
-                                125,
-                                125,
-                                125,
-                                0.5,
-                              ),
-                              iconSelectedFillColor:
-                                  CupertinoTheme.of(context).primaryColor,
-                            ),
-                            controller: _controller,
-                            showBoldButton: true,
-                            showColorButton: false,
-                            showBackgroundColorButton: false,
-                            showCameraButton: false,
-                            showAlignmentButtons: false,
-                            showCenterAlignment: false,
-                            showClearFormat: false,
-                            showCodeBlock: false,
-                            showDividers: false,
-                            showHeaderStyle: false,
-                            showHistory: false,
-                            showHorizontalRule: false,
-                            showImageButton: false,
-                            showItalicButton: false,
-                            showUnderLineButton: false,
-                            showInlineCode: false,
-                            showListCheck: false,
-                            showQuote: false,
-                            showLink: false,
-                            showIndent: false,
-                            showStrikeThrough: false,
-                            showVideoButton: false,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
               ),
               Padding(
