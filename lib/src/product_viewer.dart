@@ -234,6 +234,30 @@ class ProductViewer extends StatelessWidget {
               ),
             ),
             _drawList(
+              product['names']["tags"] != null
+                  ? product['names']["tags"]
+                  : null,
+              title: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.tags,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text(
+                    'Tags :'.toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            _drawList(
               product['tagPicture'] != null ? [product['tagPicture']] : null,
               title: Row(
                 children: [

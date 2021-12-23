@@ -1,11 +1,12 @@
 import 'package:biolensback/shelf.dart';
 import 'package:biolensback/src/landing.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() {
   configureApp();
@@ -25,7 +26,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<FirebaseApp> _initialization =
+      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   Widget _firebaseConnect() {
     return FutureBuilder(
