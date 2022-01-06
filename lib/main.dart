@@ -36,7 +36,8 @@ class _AppState extends State<App> {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Text('Error sync');
+          return CupertinoPageScaffold(
+              child: Center(child: Text('Error sync')));
         }
 
         // Once complete, show your application
@@ -45,7 +46,11 @@ class _AppState extends State<App> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return Text('Loading');
+        return CupertinoPageScaffold(
+          child: Center(
+            child: CupertinoActivityIndicator(),
+          ),
+        );
       },
     );
   }

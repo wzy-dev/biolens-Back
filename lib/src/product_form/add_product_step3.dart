@@ -24,6 +24,7 @@ class AddProductStep3 extends StatefulWidget {
     List<String>? tagsIds,
     List<String>? tagsTmp,
     String? tagPicture,
+    String? source,
     bool save,
   }) submit;
   final Product product;
@@ -36,7 +37,9 @@ class AddProductStep3 extends StatefulWidget {
 
 class _AddProductStep3State extends State<AddProductStep3> {
   late String? _tagPicture;
+  late String? _source;
   late TextEditingController _controllerTagPicture;
+  late TextEditingController? _controllerSource;
   late List<String> _indicationsIds;
   late List<String> _indicationsTmp;
   late List<String> _tagsIds;
@@ -50,8 +53,10 @@ class _AddProductStep3State extends State<AddProductStep3> {
     super.initState();
 
     _tagPicture = widget.product.tagPicture;
+    _source = widget.product.source;
     _controllerTagPicture =
         TextEditingController(text: widget.product.tagPicture);
+    _controllerSource = TextEditingController(text: widget.product.source);
     _indicationsIds = widget.product.indicationsIds;
     _indicationsTmp = widget.product.indicationsTmp;
     _tagsIds = widget.product.tagsIds;
@@ -92,6 +97,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
           .split('\n')
           .where((element) => element.isEmpty == false)
           .toList(),
+      source: _source,
       save: true,
     );
   }
@@ -240,6 +246,24 @@ class _AddProductStep3State extends State<AddProductStep3> {
                     style: TextStyle(height: 1.5),
                   ),
                   help: 'Sautez une ligne entre les étapes',
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: CustomCupertinoFieldsGroup(
+                  title: 'Source',
+                  help: "Ajouter ici le lien vers les données du constructeur",
+                  body: CustomCupertinoTextField(
+                    autofocus: false,
+                    isNullable: true,
+                    value: _source,
+                    controller: _controllerSource,
+                    onChanged: (value) {
+                      setState(() {
+                        _source = value;
+                      });
+                    },
+                  ),
                 ),
               ),
               Padding(

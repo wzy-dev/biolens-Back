@@ -44,6 +44,7 @@ class _EditProductState extends State<EditProduct> {
     _product.tagsTmp = List<String>.from(widget.product['names']['tags'] ?? []);
     _product.tagsIds = List<String>.from(widget.product['ids']['tags'] ?? []);
     _product.tagPicture = widget.product['tagPicture'];
+    _product.source = widget.product['source'];
 
     super.initState();
   }
@@ -93,6 +94,7 @@ class _EditProductState extends State<EditProduct> {
     tagsIds,
     tagsTmp,
     tagPicture,
+    source,
     save = false,
   }) {
     if (filename != null) {
@@ -163,6 +165,10 @@ class _EditProductState extends State<EditProduct> {
       _product.tagPicture = tagPicture!.isNotEmpty ? tagPicture : null;
     }
 
+    if (source != null) {
+      _product.source = source.isNotEmpty ? source : null;
+    }
+
     if (save == true) {
       if (_product.uint8List != null) {
         uploadFile(
@@ -203,6 +209,7 @@ class _EditProductState extends State<EditProduct> {
           'cookbook': _product.cookbook,
           'editedAt': DateTime.now().millisecondsSinceEpoch,
           'tagPicture': _product.tagPicture,
+          'source': _product.source,
         }).then((docRef) {
           setState(() {
             _completeSubmit = widget.product['id'];

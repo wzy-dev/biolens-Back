@@ -26,6 +26,7 @@ class AddProductStep1 extends StatefulWidget {
     List<String>? tagsIds,
     List<String>? tagsTmp,
     String? tagPicture,
+    String? source,
     bool save,
   }) submit;
   final Product product;

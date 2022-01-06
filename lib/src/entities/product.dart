@@ -19,6 +19,7 @@ class Product {
   List<String> tagsIds;
   List<String> tagsTmp;
   String? tagPicture;
+  String? source;
 
   Product({
     this.filename,
@@ -37,5 +38,6 @@ class Product {
     this.tagsIds = const [],
     this.tagsTmp = const [],
     this.tagPicture,
+    this.source,
   });
 }

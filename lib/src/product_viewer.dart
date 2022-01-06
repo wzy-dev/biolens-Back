@@ -279,6 +279,28 @@ class ProductViewer extends StatelessWidget {
                 ],
               ),
             ),
+            _drawList(
+              product['source'] != null ? [product['source']] : null,
+              title: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.compass,
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text(
+                    'Source :'.toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
             CupertinoButton(
                 color: Theme.of(context).primaryColor,
                 child: Text('Modifier ce produit'),

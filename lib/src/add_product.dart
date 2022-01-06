@@ -64,6 +64,7 @@ class _AddProductState extends State<AddProduct> {
     List<String>? tagsIds,
     List<String>? tagsTmp,
     String? tagPicture,
+    String? source,
     bool save = false,
   }) {
     if (filename != null) {
@@ -133,6 +134,10 @@ class _AddProductState extends State<AddProduct> {
       _product.tagPicture = tagPicture.isNotEmpty ? tagPicture : null;
     }
 
+    if (source != null) {
+      _product.source = source.isNotEmpty ? source : null;
+    }
+
     if (save == true) {
       if (_product.uint8List != null) {
         uploadFile(
@@ -169,6 +174,7 @@ class _AddProductState extends State<AddProduct> {
         'cookbook': _product.cookbook,
         'editedAt': DateTime.now().millisecondsSinceEpoch,
         'tagPicture': _product.tagPicture,
+        'source': _product.source,
         'enabled': true,
       }).then((docRef) {
         setState(() {
