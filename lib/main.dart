@@ -80,7 +80,8 @@ class _AppState extends State<App> {
           // '/about': (context) => About(),
           '/add': (context) => AddProduct(),
           '/viewer': (context) => ProductViewer(),
-          '/privacy': (context) => Privacy(),
+          '/about': (context) => Privacy(canPop: true),
+          '/privacy': (context) => Privacy(canPop: false),
         },
         onGenerateRoute: (settings) {
           final String path = settings.name!.split("/")[1];

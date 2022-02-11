@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Privacy extends StatelessWidget {
-  const Privacy({Key? key}) : super(key: key);
+  const Privacy({Key? key, required this.canPop}) : super(key: key);
+
+  final bool canPop;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        // automaticallyImplyLeading: false,
+        automaticallyImplyLeading: canPop,
         middle: Text(
           "Contact et confidentialité",
         ),
@@ -51,7 +53,7 @@ class Privacy extends StatelessWidget {
             AnswerBlock(
               answer: "Comment me contacter ?",
               replies: [
-                "Une question, un bug, une erreur ou encore une suggestion ? N'hésitez pas à me contacter en suivant les liens ci-dessous :"
+                "Une question, un bug, une erreur ou encore une suggestion ? N'hésitez pas à me contacter en suivant le lien ci-dessous :"
               ],
             ),
             Row(
@@ -73,17 +75,17 @@ class Privacy extends StatelessWidget {
                             color: CupertinoColors.white,
                             size: 50,
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "wegrzyn.simon@gmail.com",
-                            style: TextStyle(
-                              color: CupertinoColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 20,
+                          // ),
+                          // Text(
+                          //   "wegrzyn.simon@gmail.com",
+                          //   style: TextStyle(
+                          //     color: CupertinoColors.white,
+                          //     fontWeight: FontWeight.w500,
+                          //     fontSize: 12,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -92,39 +94,39 @@ class Privacy extends StatelessWidget {
                 SizedBox(
                   width: 13,
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color.fromRGBO(181, 87, 74, 1),
-                    ),
-                    child: CupertinoButton(
-                      padding: const EdgeInsets.all(20),
-                      onPressed: () => launch("sms:33620905177"),
-                      child: Column(
-                        children: [
-                          Icon(
-                            CupertinoIcons.phone,
-                            color: CupertinoColors.white,
-                            size: 50,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "06 20 90 51 77",
-                            style: TextStyle(
-                              color: CupertinoColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                //       color: Color.fromRGBO(181, 87, 74, 1),
+                //     ),
+                //     child: CupertinoButton(
+                //       padding: const EdgeInsets.all(20),
+                //       onPressed: () => launch("sms:33620905177"),
+                //       child: Column(
+                //         children: [
+                //           Icon(
+                //             CupertinoIcons.phone,
+                //             color: CupertinoColors.white,
+                //             size: 50,
+                //           ),
+                //           SizedBox(
+                //             height: 20,
+                //           ),
+                //           Text(
+                //             "06 20 90 51 77",
+                //             style: TextStyle(
+                //               color: CupertinoColors.white,
+                //               fontWeight: FontWeight.w500,
+                //               fontSize: 12,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
