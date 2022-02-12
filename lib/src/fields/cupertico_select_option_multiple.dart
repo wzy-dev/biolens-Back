@@ -146,18 +146,32 @@ class _CustomSelectOptionMultipleState
             widget.touchAction(name: _controller.text, id: widget.id);
           }
         },
-        child: CupertinoTextField(
-          controller: _controller,
-          enabled: _enabled,
-          focusNode: _focusNode,
-          maxLines: null,
-          onEditingComplete: _renameAction,
-          decoration: BoxDecoration(border: null, color: Colors.transparent),
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          prefix: widget.enabled == true
-              ? Icon(CupertinoIcons.check_mark)
-              : Container(),
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        child: Row(
+          children: [
+            widget.enabled == true
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(CupertinoIcons.check_mark),
+                  )
+                : SizedBox(),
+            Expanded(
+              child: TextField(
+                controller: _controller,
+                enabled: _enabled,
+                focusNode: _focusNode,
+                maxLines: null,
+                onEditingComplete: _renameAction,
+                decoration: InputDecoration(
+                  border: null,
+                  fillColor: Colors.transparent,
+                ),
+                style: TextStyle(
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
       ),
       trailing: Row(

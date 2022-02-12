@@ -300,30 +300,44 @@ class _ModalContentState extends State<ModalContent> {
         Padding(
           padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
           child: ListTile(
-            title: CupertinoTextField(
-              autofocus: true,
-              placeholder: 'Rechercher parmi les suggestions',
-              placeholderStyle: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: CupertinoColors.placeholderText),
-              controller: _controllerSetter,
-              style: TextStyle(fontSize: 16),
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              onEditingComplete: _addNewItem,
-              suffix: _query.length > 0
-                  ? IconButton(
-                      color: CupertinoColors.systemGreen,
-                      icon: Icon(
-                        CupertinoIcons.plus_circle_fill,
-                      ),
-                      onPressed: _addNewItem,
-                    )
-                  : Container(),
-              onChanged: (value) {
-                setState(() {
-                  _query = value;
-                });
-              },
+            title: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                border: Border.all(
+                  color: CupertinoColors.systemGrey,
+                ),
+              ),
+              child: TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                  border: InputBorder.none,
+                  hintText: 'Rechercher parmi les suggestions',
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                  suffixIcon: _query.length > 0
+                      ? IconButton(
+                          color: CupertinoColors.systemGreen,
+                          icon: Icon(
+                            CupertinoIcons.plus_circle_fill,
+                          ),
+                          onPressed: _addNewItem,
+                        )
+                      : SizedBox(),
+                ),
+                controller: _controllerSetter,
+                style: TextStyle(
+                    color: CupertinoTheme.of(context).textTheme.textStyle.color,
+                    fontSize: 16),
+                onEditingComplete: _addNewItem,
+                onChanged: (value) {
+                  setState(() {
+                    _query = value;
+                  });
+                },
+              ),
             ),
           ),
         ),

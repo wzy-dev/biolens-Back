@@ -137,7 +137,7 @@ class _AddProductStep1State extends State<AddProductStep1> {
                 ),
                 CustomCupertinoFieldsGroup(
                   title: 'Nom du produit',
-                  body: CustomCupertinoTextField(
+                  body: CustomTextField(
                     value: _name,
                     node: node,
                     controller: _controllerName,
@@ -150,7 +150,7 @@ class _AddProductStep1State extends State<AddProductStep1> {
                 ),
                 CustomCupertinoFieldsGroup(
                   title: 'Marque du produit',
-                  body: CustomCupertinoTextField(
+                  body: CustomTextField(
                     value: _brand,
                     node: node,
                     controller: _controllerBrand,

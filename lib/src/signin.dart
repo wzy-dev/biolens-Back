@@ -128,18 +128,36 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Container(
                 height: 50,
-                child: CupertinoTextField(
-                  onEditingComplete: () {
-                    node.nextFocus();
-                  },
-                  controller: _controllerMail,
+                child: Container(
                   decoration: _textInputDecoration(_errorMail),
-                  autofillHints: [AutofillHints.email],
-                  prefix: Padding(
-                    child: Icon(CupertinoIcons.mail),
-                    padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Padding(
+                        child: Icon(CupertinoIcons.mail),
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          onEditingComplete: () {
+                            node.nextFocus();
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Adresse mail',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                          controller: _controllerMail,
+                          autofillHints: [AutofillHints.email],
+                          style: TextStyle(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  placeholder: 'Adresse mail',
                 ),
               ),
               SizedBox(
@@ -147,17 +165,38 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Container(
                 height: 50,
-                child: CupertinoTextField(
-                  onEditingComplete: _signIn,
-                  controller: _controllerPassword,
+                child: Container(
                   decoration: _textInputDecoration(_errorPassword),
-                  obscureText: true,
-                  autofillHints: [AutofillHints.password],
-                  prefix: Padding(
-                    child: Icon(CupertinoIcons.lock),
-                    padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Padding(
+                        child: Icon(CupertinoIcons.lock),
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          onEditingComplete: () => _signIn(),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Mot de passe',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                          controller: _controllerPassword,
+                          autofillHints: [AutofillHints.password],
+                          style: TextStyle(
+                            color: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .color,
+                          ),
+                          obscureText: true,
+                        ),
+                      ),
+                    ],
                   ),
-                  placeholder: 'Mot de passe',
                 ),
               ),
               SizedBox(

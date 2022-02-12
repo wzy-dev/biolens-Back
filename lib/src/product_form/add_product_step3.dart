@@ -124,7 +124,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   title: 'Tag scanner',
                   help:
                       "Ajouter ici le nom du produit tel qu'il est écrit sur l'emballage",
-                  body: CustomCupertinoTextField(
+                  body: CustomTextField(
                     autofocus: false,
                     isNullable: true,
                     value: _tagPicture,
@@ -191,19 +191,33 @@ class _AddProductStep3State extends State<AddProductStep3> {
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: CustomCupertinoFieldsGroup(
                   title: 'Précautions du produit',
-                  body: CupertinoTextField(
-                    controller: _precautions,
-                    textCapitalization: TextCapitalization.sentences,
-                    minLines: 3,
-                    maxLines: 5,
-                    selectionHeightStyle: BoxHeightStyle.includeLineSpacingTop,
+                  body: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    style: TextStyle(height: 1.5),
+                    child: TextField(
+                      controller: _precautions,
+                      textCapitalization: TextCapitalization.sentences,
+                      minLines: 3,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                      ),
+                      selectionHeightStyle:
+                          BoxHeightStyle.includeLineSpacingTop,
+                      style: TextStyle(
+                        color: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .color,
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                   help: 'Sautez une ligne entre les précautions',
                 ),
@@ -212,18 +226,31 @@ class _AddProductStep3State extends State<AddProductStep3> {
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: CustomCupertinoFieldsGroup(
                   title: 'Composition du produit',
-                  body: CupertinoTextField(
-                    controller: _ingredients,
-                    textCapitalization: TextCapitalization.sentences,
-                    minLines: 3,
-                    maxLines: 5,
+                  body: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    style: TextStyle(height: 1.5),
+                    child: TextField(
+                      controller: _ingredients,
+                      textCapitalization: TextCapitalization.sentences,
+                      minLines: 3,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                      ),
+                      style: TextStyle(
+                        color: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .color,
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                   help: 'Sautez une ligne entre les composants',
                 ),
@@ -232,18 +259,31 @@ class _AddProductStep3State extends State<AddProductStep3> {
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: CustomCupertinoFieldsGroup(
                   title: 'Mode d\'emploi du produit',
-                  body: CupertinoTextField(
-                    controller: _cookbook,
-                    textCapitalization: TextCapitalization.sentences,
-                    minLines: 3,
-                    maxLines: 5,
+                  body: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    style: TextStyle(height: 1.5),
+                    child: TextField(
+                      controller: _cookbook,
+                      textCapitalization: TextCapitalization.sentences,
+                      minLines: 3,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                      ),
+                      style: TextStyle(
+                        color: CupertinoTheme.of(context)
+                            .textTheme
+                            .textStyle
+                            .color,
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                   help: 'Sautez une ligne entre les étapes',
                 ),
@@ -253,7 +293,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                 child: CustomCupertinoFieldsGroup(
                   title: 'Source',
                   help: "Ajouter ici le lien vers les données du constructeur",
-                  body: CustomCupertinoTextField(
+                  body: CustomTextField(
                     autofocus: false,
                     isNullable: true,
                     value: _source,
