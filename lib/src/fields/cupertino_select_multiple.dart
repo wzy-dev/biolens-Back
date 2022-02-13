@@ -142,7 +142,7 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
               0, (i > 0 ? 5 : 0), 0, (i < _listIds.length ? 5 : 0)),
           decoration: BoxDecoration(
             color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(6)),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
             border: Border.all(
               color: CupertinoColors.systemGrey,
             ),
@@ -197,7 +197,7 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
             ),
             decoration: BoxDecoration(
               color: Color.fromRGBO(10, 122, 255, 0.1),
-              borderRadius: BorderRadius.all(Radius.circular(6)),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
                 color: CupertinoColors.systemGrey,
               ),

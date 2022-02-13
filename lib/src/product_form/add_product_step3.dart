@@ -193,7 +193,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   title: 'Précautions du produit',
                   body: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
@@ -202,20 +202,17 @@ class _AddProductStep3State extends State<AddProductStep3> {
                       controller: _precautions,
                       textCapitalization: TextCapitalization.sentences,
                       minLines: 3,
-                      maxLines: 5,
+                      maxLines: null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
                       ),
-                      selectionHeightStyle:
-                          BoxHeightStyle.includeLineSpacingTop,
+                      selectionHeightStyle: BoxHeightStyle.max,
                       style: TextStyle(
                         color: CupertinoTheme.of(context)
                             .textTheme
                             .textStyle
                             .color,
-                        fontSize: 14,
-                        height: 1.5,
                       ),
                     ),
                   ),
@@ -228,7 +225,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   title: 'Composition du produit',
                   body: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
@@ -237,18 +234,17 @@ class _AddProductStep3State extends State<AddProductStep3> {
                       controller: _ingredients,
                       textCapitalization: TextCapitalization.sentences,
                       minLines: 3,
-                      maxLines: 5,
+                      maxLines: null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
                       ),
+                      selectionHeightStyle: BoxHeightStyle.max,
                       style: TextStyle(
                         color: CupertinoTheme.of(context)
                             .textTheme
                             .textStyle
                             .color,
-                        fontSize: 14,
-                        height: 1.5,
                       ),
                     ),
                   ),
@@ -261,27 +257,27 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   title: 'Mode d\'emploi du produit',
                   body: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
                     child: TextField(
+                      key: Key("usage"),
                       controller: _cookbook,
                       textCapitalization: TextCapitalization.sentences,
                       minLines: 3,
-                      maxLines: 5,
+                      maxLines: null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
                       ),
+                      selectionHeightStyle: BoxHeightStyle.max,
                       style: TextStyle(
                         color: CupertinoTheme.of(context)
                             .textTheme
                             .textStyle
                             .color,
-                        fontSize: 14,
-                        height: 1.5,
                       ),
                     ),
                   ),

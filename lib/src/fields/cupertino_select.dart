@@ -72,7 +72,7 @@ class _CustomSelectState extends State<CustomSelect> {
         // If disabled > Box disabled
         return BoxDecoration(
           color: Color.fromRGBO(0, 0, 0, 0.05),
-          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           border: Border.all(
             color: CupertinoColors.systemGrey5,
           ),
@@ -81,7 +81,7 @@ class _CustomSelectState extends State<CustomSelect> {
         // If empty > Box danger
         return BoxDecoration(
           color: Color.fromRGBO(255, 0, 0, 0.05),
-          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           border: Border.all(
             color: CupertinoColors.destructiveRed,
           ),
@@ -90,7 +90,7 @@ class _CustomSelectState extends State<CustomSelect> {
         // If not empty > Box ok
         return BoxDecoration(
           // color: CupertinoColors.lightBackgroundGray,
-          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           border: Border.all(
             color: CupertinoColors.systemGrey,
           ),

@@ -27,19 +27,22 @@ class _ViewerPictureState extends State<ViewerPicture> {
                 child: ListView(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           height: 20,
                         ),
-                        Hero(
-                          tag: 'picture',
-                          transitionOnUserGestures: true,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              color: Color.fromRGBO(190, 190, 190, 0.1),
-                              child: widget.picture,
+                        Center(
+                          child: Hero(
+                            tag: 'picture',
+                            transitionOnUserGestures: true,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                color: Color.fromRGBO(190, 190, 190, 0.1),
+                                child: widget.picture,
+                              ),
                             ),
                           ),
                         ),

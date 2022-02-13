@@ -20,7 +20,7 @@ class _SignInPageState extends State<SignInPage> {
       // If error > Box danger
       return BoxDecoration(
         color: Color.fromRGBO(255, 0, 0, 0.05),
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
         border: Border.all(
           color: CupertinoColors.destructiveRed,
         ),
@@ -28,7 +28,7 @@ class _SignInPageState extends State<SignInPage> {
     } else {
       // If not error > Box ok
       return BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
         border: Border.all(
           color: CupertinoColors.systemGrey,
         ),
@@ -152,7 +152,10 @@ class _SignInPageState extends State<SignInPage> {
                           controller: _controllerMail,
                           autofillHints: [AutofillHints.email],
                           style: TextStyle(
-                            color: CupertinoColors.systemGrey,
+                            color: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .color,
                           ),
                         ),
                       ),
