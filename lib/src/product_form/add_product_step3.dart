@@ -198,23 +198,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    child: TextField(
-                      controller: _precautions,
-                      textCapitalization: TextCapitalization.sentences,
-                      minLines: 3,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-                      ),
-                      selectionHeightStyle: BoxHeightStyle.max,
-                      style: TextStyle(
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color,
-                      ),
-                    ),
+                    child: RichTextField(controller: _precautions),
                   ),
                   help: 'Sautez une ligne entre les précautions',
                 ),
@@ -230,23 +214,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    child: TextField(
-                      controller: _ingredients,
-                      textCapitalization: TextCapitalization.sentences,
-                      minLines: 3,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-                      ),
-                      selectionHeightStyle: BoxHeightStyle.max,
-                      style: TextStyle(
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color,
-                      ),
-                    ),
+                    child: RichTextField(controller: _ingredients),
                   ),
                   help: 'Sautez une ligne entre les composants',
                 ),
@@ -262,24 +230,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
-                    child: TextField(
-                      key: Key("usage"),
-                      controller: _cookbook,
-                      textCapitalization: TextCapitalization.sentences,
-                      minLines: 3,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-                      ),
-                      selectionHeightStyle: BoxHeightStyle.max,
-                      style: TextStyle(
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color,
-                      ),
-                    ),
+                    child: RichTextField(controller: _cookbook),
                   ),
                   help: 'Sautez une ligne entre les étapes',
                 ),
@@ -317,6 +268,100 @@ class _AddProductStep3State extends State<AddProductStep3> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RichTextField extends StatelessWidget {
+  const RichTextField({
+    Key? key,
+    required TextEditingController? controller,
+  })  : _controller = controller,
+        super(key: key);
+
+  final TextEditingController? _controller;
+
+  _addEffet(String nameEffect) {
+    int start = _controller!.value.selection.start;
+    int end = _controller!.value.selection.end;
+
+    if (_controller!.text.substring(start - (2 + nameEffect.length), start) ==
+            "[$nameEffect]" &&
+        _controller!.text.substring(end, end + (3 + nameEffect.length)) ==
+            "[/$nameEffect]") {
+      String newString = _controller!.text.substring(start, end);
+
+      _controller!.text = _controller!.text.replaceRange(
+          start - (2 + nameEffect.length),
+          end + (3 + nameEffect.length),
+          newString);
+
+      _controller!.selection = TextSelection(
+        baseOffset: start - (2 + nameEffect.length),
+        extentOffset: end - (2 + nameEffect.length),
+      );
+
+      return;
+    }
+
+    String newString =
+        "[$nameEffect]${_controller!.text.substring(start, end)}[/$nameEffect]";
+
+    _controller!.text = _controller!.text.replaceRange(start, end, newString);
+
+    _controller!.selection = TextSelection(
+      baseOffset: start + (2 + nameEffect.length),
+      extentOffset: end + (2 + nameEffect.length),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: _controller,
+          textCapitalization: TextCapitalization.sentences,
+          minLines: 3,
+          maxLines: null,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.fromLTRB(8, 10, 8, 0),
+          ),
+          selectionHeightStyle: BoxHeightStyle.max,
+          style: TextStyle(
+            color: CupertinoTheme.of(context).textTheme.textStyle.color,
+          ),
+        ),
+        Divider(
+          color: CupertinoColors.systemGrey2,
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+              child: InkWell(
+                child: Icon(CupertinoIcons.bold),
+                onTap: () => _addEffet("b"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+              child: InkWell(
+                child: Icon(CupertinoIcons.italic),
+                onTap: () => _addEffet("i"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+              child: InkWell(
+                child: Icon(CupertinoIcons.underline),
+                onTap: () => _addEffet("u"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

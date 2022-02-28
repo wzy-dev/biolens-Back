@@ -10,6 +10,52 @@ class ProductViewerArguments {
 }
 
 class ProductViewer extends StatelessWidget {
+  List<TextSpan> _getTextSpanChildren(String stg) {
+    RegExp matchesRegString = RegExp("(?=\\[(b|u|i)\\])|(?<=\\[\/(b|u|i)\\])");
+    List<String> listWords = stg.split(matchesRegString).toList();
+
+    RegExp openReg = RegExp("\\[(b|u|i)\\]");
+    RegExp closeReg = RegExp("\\[\/(b|u|i)\\]");
+    RegExp contentReg = RegExp("(?<=\\[(b|u|i)\\])(.*?)(?=\\[\/(b|u|i)\\])");
+    RegExp getEffect = RegExp("(?<=\\[\/?)(.*?)(?=\\])");
+
+    List<TextSpan> textSpanChildren = [];
+
+    listWords.forEach(
+      (input) {
+        if (!openReg.hasMatch(input) && !closeReg.hasMatch(input)) {
+          textSpanChildren.add(
+            TextSpan(text: input),
+          );
+          return;
+        }
+
+        if (contentReg.hasMatch(input)) {
+          String text = input.substring(contentReg.firstMatch(input)!.start,
+              contentReg.firstMatch(input)!.end);
+          String effect = input.substring(getEffect.firstMatch(input)!.start,
+              getEffect.firstMatch(input)!.end);
+
+          textSpanChildren.add(
+            TextSpan(
+                style: TextStyle(
+                  fontWeight:
+                      (effect == "b" ? FontWeight.bold : FontWeight.normal),
+                  decoration: (effect == "u"
+                      ? TextDecoration.underline
+                      : TextDecoration.none),
+                  fontStyle:
+                      (effect == "i" ? FontStyle.italic : FontStyle.normal),
+                ),
+                text: text),
+          );
+          return;
+        }
+      },
+    );
+    return textSpanChildren;
+  }
+
   @override
   Widget build(BuildContext context) {
     final RouteArgs? routeArgs =
@@ -72,11 +118,16 @@ class ProductViewer extends StatelessWidget {
         return Column();
       }
 
-      for (var item in list) {
-        children.add(Text(
-          "• " + item,
-          style: TextStyle(color: CupertinoColors.systemGrey2),
-        ));
+      for (String item in list) {
+        children.add(
+          RichText(
+            text: TextSpan(
+              style: TextStyle(color: CupertinoColors.systemGrey2),
+              text: "• ",
+              children: _getTextSpanChildren(item),
+            ),
+          ),
+        );
       }
 
       children.add(
