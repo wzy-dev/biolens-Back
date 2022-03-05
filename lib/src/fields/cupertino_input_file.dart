@@ -123,7 +123,7 @@ class _CupertinoInputFileState extends State<CupertinoInputFile> {
                       ? CupertinoActivityIndicator()
                       : Icon(
                           Icons.camera_alt,
-                          color: Theme.of(context).primaryColor,
+                          color: CupertinoTheme.of(context).primaryColor,
                         ),
                 ),
         ),

@@ -62,17 +62,41 @@ class _HomepageState extends State<Homepage> {
           child: SvgPicture.asset(
             'assets/logo.svg',
             semanticsLabel: 'biolens',
-            color: Theme.of(context).primaryColor,
+            color: CupertinoTheme.of(context).primaryColor,
           ),
         ),
         trailing: Padding(
           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: Container(
-            width: 60,
+            width: 95,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                CupertinoButton(
+                  minSize: 25,
+                  padding: EdgeInsets.zero,
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/university'),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Icon(
+                        Icons.school_outlined,
+                        size: 15,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.8,
+                        color: CupertinoTheme.of(context).primaryColor,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                SizedBox(width: kIsWeb ? 10 : 0),
                 _drawExport(widget.snapshot) ?? SizedBox(),
                 SizedBox(width: 10),
                 CupertinoButton(
@@ -81,7 +105,7 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () => Navigator.of(context).pushNamed('/about'),
                   child: Icon(
                     CupertinoIcons.info_circle,
-                    color: Theme.of(context).primaryColor,
+                    color: CupertinoTheme.of(context).primaryColor,
                     size: 25,
                   ),
                 ),
@@ -115,9 +139,9 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              padding: EdgeInsets.fromLTRB(0, 8, 0, 20),
               child: CupertinoButton(
-                color: Theme.of(context).primaryColor,
+                color: CupertinoTheme.of(context).primaryColor,
                 onPressed: () {
                   Navigator.of(context).pushNamed('/add');
                 },

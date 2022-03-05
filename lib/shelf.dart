@@ -1,7 +1,9 @@
 export 'main.dart';
 export 'src/homepage.dart';
+export 'src/university_homepage.dart';
+export 'src/annotation.dart';
 export 'src/products_list.dart';
-export 'src/stream_product.dart';
+export 'src/stream_products.dart';
 export 'src/add_product.dart';
 export 'src/edit_product.dart';
 export 'src/fields/cupertino_text_field.dart';

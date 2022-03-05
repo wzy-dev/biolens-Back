@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'add_product_step2.dart';
 import 'package:biolensback/shelf.dart';
 
@@ -167,7 +166,7 @@ class _AddProductStep1State extends State<AddProductStep1> {
                   child: CupertinoButton(
                     child: Text('Suivant'),
                     onPressed: _submit,
-                    color: Theme.of(context).primaryColor,
+                    color: CupertinoTheme.of(context).primaryColor,
                   ),
                 )
               ],

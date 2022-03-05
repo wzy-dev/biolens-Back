@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:biolensback/shelf.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'add_product_step3.dart';
 
 class AddProductStep2 extends StatefulWidget {
@@ -151,7 +150,7 @@ class _AddProductStep2State extends State<AddProductStep2> {
                   child: CupertinoButton(
                     child: Text('Suivant'),
                     onPressed: _submit,
-                    color: Theme.of(context).primaryColor,
+                    color: CupertinoTheme.of(context).primaryColor,
                   ),
                 )
               ],

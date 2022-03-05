@@ -260,7 +260,7 @@ class _AddProductStep3State extends State<AddProductStep3> {
                   child: CupertinoButton(
                     child: Text('Suivant'),
                     onPressed: _submit,
-                    color: Theme.of(context).primaryColor,
+                    color: CupertinoTheme.of(context).primaryColor,
                   ),
                 ),
               ),

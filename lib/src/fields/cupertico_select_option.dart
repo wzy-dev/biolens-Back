@@ -78,7 +78,7 @@ class _CustomSelectOptionState extends State<CustomSelectOption> {
               _focusNode.requestFocus();
             });
           },
-          color: Theme.of(context).primaryColor,
+          color: CupertinoTheme.of(context).primaryColor,
           iconSize: 28,
           icon: Icon(
             CupertinoIcons.pencil,

@@ -1,7 +1,6 @@
 import 'package:biolensback/shelf.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class ProductViewerArguments {
   final Map? product;
@@ -353,7 +352,7 @@ class ProductViewer extends StatelessWidget {
               ),
             ),
             CupertinoButton(
-                color: Theme.of(context).primaryColor,
+                color: CupertinoTheme.of(context).primaryColor,
                 child: Text('Modifier ce produit'),
                 onPressed: () {
                   Navigator.of(context).push(

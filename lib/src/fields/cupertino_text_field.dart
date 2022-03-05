@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
     if (!isNullable && (value?.isEmpty ?? false)) {
       return CupertinoColors.destructiveRed;
     } else {
-      return Theme.of(context).primaryColor;
+      return CupertinoTheme.of(context).primaryColor;
     }
   }
 

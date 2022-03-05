@@ -1,7 +1,6 @@
 import 'package:download/download.dart';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -179,7 +178,7 @@ class _ExportState extends State<Export> {
           ? CupertinoActivityIndicator()
           : Icon(
               CupertinoIcons.download_circle,
-              color: Theme.of(context).primaryColor,
+              color: CupertinoTheme.of(context).primaryColor,
               size: 25,
             ),
     );

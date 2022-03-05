@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Privacy extends StatelessWidget {
@@ -63,7 +62,7 @@ class Privacy extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Theme.of(context).primaryColor,
+                      color: CupertinoTheme.of(context).primaryColor,
                     ),
                     child: CupertinoButton(
                       padding: const EdgeInsets.all(20),
@@ -168,7 +167,7 @@ class AnswerBlock extends StatelessWidget {
                       width: 5,
                       height: 5,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
+                        color: CupertinoTheme.of(context).primaryColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -183,7 +182,7 @@ class AnswerBlock extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 22,
                       letterSpacing: 1,
-                      color: Theme.of(context).primaryColor,
+                      color: CupertinoTheme.of(context).primaryColor,
                     ),
                   ),
                 ),

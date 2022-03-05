@@ -91,7 +91,7 @@ class _SignInPageState extends State<SignInPage> {
           child: SvgPicture.asset(
             'assets/logo.svg',
             semanticsLabel: 'biolens',
-            color: Theme.of(context).primaryColor,
+            color: CupertinoTheme.of(context).primaryColor,
           ),
         ),
         trailing: Row(
@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
               onPressed: () => Navigator.of(context).pushNamed('/about'),
               child: Icon(
                 CupertinoIcons.info_circle,
-                color: Theme.of(context).primaryColor,
+                color: CupertinoTheme.of(context).primaryColor,
                 size: 25,
               ),
             ),
@@ -120,7 +120,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: SvgPicture.asset(
                   'assets/logo.svg',
                   semanticsLabel: 'biolens',
-                  color: Theme.of(context).primaryColor,
+                  color: CupertinoTheme.of(context).primaryColor,
                 ),
               ),
               SizedBox(
@@ -209,7 +209,7 @@ class _SignInPageState extends State<SignInPage> {
                 width: double.infinity,
                 height: 55,
                 child: CupertinoButton(
-                  color: Theme.of(context).primaryColor,
+                  color: CupertinoTheme.of(context).primaryColor,
                   child: Text('Connexion'),
                   onPressed: _signIn,
                 ),
