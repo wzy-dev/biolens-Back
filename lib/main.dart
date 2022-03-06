@@ -29,12 +29,6 @@ class _AppState extends State<App> {
   final Future<FirebaseApp> _initialization =
       Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Widget _firebaseConnect() {
-  //   return return LandingPage();
-  //       }
-
-  // }
-
   @override
   Widget build(BuildContext context) {
     // return TestTextField();
@@ -56,53 +50,54 @@ class _AppState extends State<App> {
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: Material(
               child: CupertinoApp(
-                  localizationsDelegates: [
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: [Locale('fr', 'FR')],
-                  theme: CupertinoThemeData(
-                    primaryColor: CupertinoColors.activeBlue,
-                    textTheme: CupertinoTextThemeData(
-                      textStyle: TextStyle(
-                        color: CupertinoDynamicColor.withBrightness(
-                          color: CupertinoColors.black,
-                          darkColor: CupertinoColors.white,
-                        ).resolveFrom(context),
-                      ),
+                localizationsDelegates: [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: [Locale('fr', 'FR')],
+                theme: CupertinoThemeData(
+                  primaryColor: CupertinoColors.activeBlue,
+                  textTheme: CupertinoTextThemeData(
+                    textStyle: TextStyle(
+                      color: CupertinoDynamicColor.withBrightness(
+                        color: CupertinoColors.black,
+                        darkColor: CupertinoColors.white,
+                      ).resolveFrom(context),
                     ),
                   ),
-                  routes: {
-                    '/add': (context) => AddProduct(),
-                    '/viewer': (context) => ProductViewer(),
-                    '/university': (context) => UniversityHomepage(),
-                    '/about': (context) => Privacy(canPop: true),
-                    '/privacy': (context) => Privacy(canPop: false),
-                  },
-                  onGenerateRoute: (settings) {
-                    final String path = settings.name!.split("/")[1];
-                    final arguments = RouteArgs(
-                        arguments: settings.arguments,
-                        parameter: settings.name!.split("/")[2]);
-                    Widget page;
+                ),
+                routes: {
+                  '/': (context) => LandingPage(),
+                  '/add': (context) => AddProduct(),
+                  '/viewer': (context) => ProductViewer(),
+                  '/university': (context) => ManagementCenterAdmin(),
+                  '/about': (context) => Privacy(canPop: true),
+                  '/privacy': (context) => Privacy(canPop: false),
+                },
+                onGenerateRoute: (settings) {
+                  final String path = settings.name!.split("/")[1];
+                  final arguments = RouteArgs(
+                      arguments: settings.arguments,
+                      parameter: settings.name!.split("/")[2]);
+                  Widget page;
 
-                    switch ("/" + path) {
-                      case "/viewer":
-                        page = ProductViewer();
-                        break;
-                      default:
-                        page = LandingPage();
-                    }
+                  switch ("/" + path) {
+                    case "/viewer":
+                      page = ProductViewer();
+                      break;
+                    default:
+                      page = LandingPage();
+                  }
 
-                    return CupertinoPageRoute(
-                        builder: (BuildContext context) => page,
-                        settings: RouteSettings(
-                          arguments: arguments,
-                          name: settings.name,
-                        ));
-                  },
-                  home: LandingPage()),
+                  return CupertinoPageRoute(
+                      builder: (BuildContext context) => page,
+                      settings: RouteSettings(
+                        arguments: arguments,
+                        name: settings.name,
+                      ));
+                },
+              ),
             ),
           );
         }

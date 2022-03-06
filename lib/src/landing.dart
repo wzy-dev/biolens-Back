@@ -39,7 +39,7 @@ class LandingPage extends StatelessWidget {
                     case Roles.admin:
                       return StreamProduct();
                     case Roles.university:
-                      return UniversityHomepage(
+                      return ManagementCenterUser(
                         university: userMap["university"],
                       );
                   }

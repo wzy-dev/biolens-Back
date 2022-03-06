@@ -1,5 +1,6 @@
 import 'package:biolensback/shelf.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _HomepageState extends State<Homepage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Container(
-          width: 60,
+          width: kIsWeb ? 4 * 25 + 3 * 10 : 3 * 25 + 2 * 10,
           child: Align(
             alignment: Alignment.centerLeft,
             child: FutureBuilder<String>(
@@ -68,7 +69,7 @@ class _HomepageState extends State<Homepage> {
         trailing: Padding(
           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: Container(
-            width: 95,
+            width: kIsWeb ? 4 * 25 + 3 * 10 : 3 * 25 + 2 * 10,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -105,6 +106,17 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () => Navigator.of(context).pushNamed('/about'),
                   child: Icon(
                     CupertinoIcons.info_circle,
+                    color: CupertinoTheme.of(context).primaryColor,
+                    size: 25,
+                  ),
+                ),
+                SizedBox(width: 10),
+                CupertinoButton(
+                  minSize: 25,
+                  padding: EdgeInsets.zero,
+                  onPressed: () => FirebaseAuth.instance.signOut(),
+                  child: Icon(
+                    CupertinoIcons.person_crop_circle_badge_xmark,
                     color: CupertinoTheme.of(context).primaryColor,
                     size: 25,
                   ),

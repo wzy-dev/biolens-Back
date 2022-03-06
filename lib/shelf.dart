@@ -1,7 +1,12 @@
 export 'main.dart';
 export 'src/homepage.dart';
-export 'src/university_homepage.dart';
-export 'src/annotation.dart';
+export 'src/university/management_center_user.dart';
+export 'src/university/management_center_admin.dart';
+export 'src/university/technical_platform.dart';
+export 'src/university/annotation.dart';
+export 'src/university/request_add_product.dart';
+export 'src/university/request_edit_product.dart';
+export 'src/university/requests_displayer.dart';
 export 'src/products_list.dart';
 export 'src/stream_products.dart';
 export 'src/add_product.dart';
