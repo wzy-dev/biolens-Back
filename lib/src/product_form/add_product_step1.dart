@@ -115,61 +115,67 @@ class _AddProductStep1State extends State<AddProductStep1> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                CupertinoInputFile(
-                  path: _filename,
-                  loadingImage: widget.loadingImage,
-                  onChanged: ({
-                    required String filename,
-                    File? file,
-                    required Uint8List uint8List,
-                  }) {
-                    setState(() {
-                      _filename = filename;
-                      _file = file;
-                      _uint8List = uint8List;
-                    });
-                  },
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    CupertinoInputFile(
+                      path: _filename,
+                      loadingImage: widget.loadingImage,
+                      onChanged: ({
+                        required String filename,
+                        File? file,
+                        required Uint8List uint8List,
+                      }) {
+                        setState(() {
+                          _filename = filename;
+                          _file = file;
+                          _uint8List = uint8List;
+                        });
+                      },
+                    ),
+                    CustomCupertinoFieldsGroup(
+                      title: 'Nom du produit',
+                      body: CustomTextField(
+                        value: _name,
+                        node: node,
+                        controller: _controllerName,
+                        onChanged: (value) {
+                          setState(() {
+                            _name = value;
+                          });
+                        },
+                      ),
+                    ),
+                    CustomCupertinoFieldsGroup(
+                      title: 'Marque du produit',
+                      body: CustomTextField(
+                        value: _brand,
+                        node: node,
+                        controller: _controllerBrand,
+                        onEditingComplete: _submit,
+                        onChanged: (value) {
+                          setState(() {
+                            _brand = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        child: Text('Suivant'),
+                        onPressed: _submit,
+                        color: CupertinoTheme.of(context).primaryColor,
+                      ),
+                    )
+                  ],
                 ),
-                CustomCupertinoFieldsGroup(
-                  title: 'Nom du produit',
-                  body: CustomTextField(
-                    value: _name,
-                    node: node,
-                    controller: _controllerName,
-                    onChanged: (value) {
-                      setState(() {
-                        _name = value;
-                      });
-                    },
-                  ),
-                ),
-                CustomCupertinoFieldsGroup(
-                  title: 'Marque du produit',
-                  body: CustomTextField(
-                    value: _brand,
-                    node: node,
-                    controller: _controllerBrand,
-                    onEditingComplete: _submit,
-                    onChanged: (value) {
-                      setState(() {
-                        _brand = value;
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text('Suivant'),
-                    onPressed: _submit,
-                    color: CupertinoTheme.of(context).primaryColor,
-                  ),
-                )
-              ],
+              ),
             ),
           ),
         ),

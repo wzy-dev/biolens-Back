@@ -9,21 +9,46 @@ class ProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: list.map((dynamic document) {
-        Map _data = document.item;
+    return ListView.separated(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        Map _data = list[index].item;
         return Material(
           type: MaterialType.transparency,
           child: CupertinoButton(
-            child: ListTile(
-              title: Text(_data['name'],
-                  style: CupertinoTheme.of(context).textTheme.textStyle),
-              subtitle: Text(
-                _data['brand'],
-                style: TextStyle(
-                  color: CupertinoColors.systemGrey2,
-                  fontSize: 12,
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(9.0),
+              child: Row(
+                children: [
+                  _data['picture'] != null
+                      ? Picture(
+                          size: 80,
+                          path: _data['picture'],
+                        )
+                      : SizedBox(
+                          width: 80,
+                          height: 80,
+                        ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(_data['name'],
+                            style:
+                                CupertinoTheme.of(context).textTheme.textStyle),
+                        SizedBox(height: 8),
+                        Text(
+                          _data['brand'],
+                          style: TextStyle(
+                            color: CupertinoColors.systemGrey2,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             padding: EdgeInsets.all(0),
@@ -36,7 +61,11 @@ class ProductsList extends StatelessWidget {
             },
           ),
         );
-      }).toList(),
+      },
+      separatorBuilder: (context, index) => Divider(
+        color: CupertinoColors.systemGrey,
+        thickness: 0.3,
+      ),
     );
   }
 }

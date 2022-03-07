@@ -41,12 +41,12 @@ class Annotation extends StatelessWidget {
         ),
       ),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              constraints: BoxConstraints(maxWidth: 800),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 800),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
               child: FutureBuilder<QuerySnapshot<Object?>>(
                 future: _annotation,
                 builder: (context, snapshotAnnotation) {
@@ -101,7 +101,6 @@ class Annotation extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                                 child: TextField(
-                                  autofocus: true,
                                   controller: _controller,
                                   minLines: 5,
                                   maxLines: 5,

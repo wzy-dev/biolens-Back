@@ -47,8 +47,12 @@ class _PictureState extends State<Picture> {
 
     _heroPicture = Image.network(
       downloadURL,
-      width: MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.width - 50,
+      width: MediaQuery.of(context).size.width > 800
+          ? 800
+          : MediaQuery.of(context).size.width - 50,
+      height: MediaQuery.of(context).size.width > 800
+          ? 800
+          : MediaQuery.of(context).size.width - 50,
       fit: BoxFit.cover,
     );
   }

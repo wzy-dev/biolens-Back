@@ -132,25 +132,31 @@ class _CustomSelectState extends State<CustomSelect> {
         barrierColor: Color.fromRGBO(100, 100, 100, 0.5),
         builder: (context) {
           return StatefulBuilder(
-            builder: (BuildContext context, setState) => Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              // child: ConstrainedBox(
-              //   constraints: BoxConstraints(
-              //       maxHeight: MediaQuery.of(context).size.height * 0.80),
-              child: SingleChildScrollView(
-                controller: ModalScrollController.of(context),
+            builder: (BuildContext context, setState) => Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 800),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: ModalContent(
-                      submit: _submit,
-                      collectionPath: _collectionPath,
-                      onChanged: widget.onChanged,
-                      activeId: _activeId,
-                      selectedId: widget.selectedId),
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  // child: ConstrainedBox(
+                  //   constraints: BoxConstraints(
+                  //       maxHeight: MediaQuery.of(context).size.height * 0.80),
+                  child: SingleChildScrollView(
+                    controller: ModalScrollController.of(context),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: ModalContent(
+                          submit: _submit,
+                          collectionPath: _collectionPath,
+                          onChanged: widget.onChanged,
+                          activeId: _activeId,
+                          selectedId: widget.selectedId),
+                    ),
+                  ),
+                  // ),
                 ),
               ),
-              // ),
             ),
           );
         });

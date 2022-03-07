@@ -103,57 +103,65 @@ class _AddProductStep2State extends State<AddProductStep2> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                CustomCupertinoFieldsGroup(
-                  title: 'Catégorie du produit',
-                  body: CustomSelect(
-                    initialName: _categoryTmp,
-                    initialId: _categoryId,
-                    enabled: true,
-                    selectedId: _categoryId,
-                    collectionPath: 'categories',
-                    onChanged: ({String? name, String? id}) {
-                      setState(() {
-                        _categoryTmp = name;
-                        _categoryId = id;
-                      });
-                    },
-                  ),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    CustomCupertinoFieldsGroup(
+                      title: 'Catégorie du produit',
+                      body: CustomSelect(
+                        initialName: _categoryTmp,
+                        initialId: _categoryId,
+                        enabled: true,
+                        selectedId: _categoryId,
+                        collectionPath: 'categories',
+                        onChanged: ({String? name, String? id}) {
+                          setState(() {
+                            _categoryTmp = name;
+                            _categoryId = id;
+                          });
+                        },
+                      ),
+                    ),
+                    CustomCupertinoFieldsGroup(
+                        title: 'Sous-catégorie du produit',
+                        body: CustomSelect(
+                          initialName: _subCategoryTmp,
+                          initialId: _subCategoryId,
+                          enabled:
+                              _categoryId != null && _categoryId!.length > 0
+                                  ? true
+                                  : false,
+                          selectedId: _subCategoryId,
+                          collectionPath: '/categories/' +
+                              _categoryId.toString() +
+                              '/subcategories',
+                          onChanged: (
+                              {required String name, required String id}) {
+                            setState(() {
+                              _subCategoryTmp = name;
+                              _subCategoryId = id;
+                            });
+                          },
+                          onChangedId: ({required String id}) {
+                            _subCategoryId = id;
+                          },
+                        )),
+                    Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        child: Text('Suivant'),
+                        onPressed: _submit,
+                        color: CupertinoTheme.of(context).primaryColor,
+                      ),
+                    )
+                  ],
                 ),
-                CustomCupertinoFieldsGroup(
-                    title: 'Sous-catégorie du produit',
-                    body: CustomSelect(
-                      initialName: _subCategoryTmp,
-                      initialId: _subCategoryId,
-                      enabled: _categoryId != null && _categoryId!.length > 0
-                          ? true
-                          : false,
-                      selectedId: _subCategoryId,
-                      collectionPath: '/categories/' +
-                          _categoryId.toString() +
-                          '/subcategories',
-                      onChanged: ({required String name, required String id}) {
-                        setState(() {
-                          _subCategoryTmp = name;
-                          _subCategoryId = id;
-                        });
-                      },
-                      onChangedId: ({required String id}) {
-                        _subCategoryId = id;
-                      },
-                    )),
-                Container(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text('Suivant'),
-                    onPressed: _submit,
-                    color: CupertinoTheme.of(context).primaryColor,
-                  ),
-                )
-              ],
+              ),
             ),
           ),
         ),

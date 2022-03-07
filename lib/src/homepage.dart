@@ -127,40 +127,56 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
       child: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
-              child: CupertinoSearchTextField(
-                padding: EdgeInsets.all(10),
-                prefixInsets: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                suffixInsets: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                style: TextStyle(fontSize: 15),
-                placeholder: 'Rechercher',
-                onChanged: (value) {
-                  setState(() {
-                    _query = value;
-                  });
-                },
-              ),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 800),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30, top: 10, right: 30, bottom: 0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
+                          child: CupertinoSearchTextField(
+                            padding: EdgeInsets.all(10),
+                            prefixInsets: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                            suffixInsets: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                            style: TextStyle(fontSize: 15),
+                            placeholder: 'Rechercher',
+                            onChanged: (value) {
+                              setState(() {
+                                _query = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: ProductsList(
+                            list: Search.searchByName(
+                                query: _query, snapshot: widget.snapshot),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                          child: CupertinoButton(
+                            color: CupertinoTheme.of(context).primaryColor,
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/add');
+                            },
+                            child: Text('Ajouter un produit'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: ProductsList(
-                list: Search.searchByName(
-                    query: _query, snapshot: widget.snapshot),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 8, 0, 20),
-              child: CupertinoButton(
-                color: CupertinoTheme.of(context).primaryColor,
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/add');
-                },
-                child: Text('Ajouter un produit'),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

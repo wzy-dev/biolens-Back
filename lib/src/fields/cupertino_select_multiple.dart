@@ -215,20 +215,26 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
       bounce: true,
       context: context,
       barrierColor: Color.fromRGBO(100, 100, 100, 0.5),
-      builder: (context) => Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: SingleChildScrollView(
-          controller: ModalScrollController.of(context),
+      builder: (context) => Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 800),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: ModalContent(
-              add: _add,
-              delete: _delete,
-              rename: _rename,
-              collectionPath: widget.collectionPath,
-              listIds: _listIds,
-              listValues: _listValues,
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SingleChildScrollView(
+              controller: ModalScrollController.of(context),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: ModalContent(
+                  add: _add,
+                  delete: _delete,
+                  rename: _rename,
+                  collectionPath: widget.collectionPath,
+                  listIds: _listIds,
+                  listValues: _listValues,
+                ),
+              ),
             ),
           ),
         ),

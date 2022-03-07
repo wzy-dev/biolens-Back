@@ -21,46 +21,52 @@ class _ViewerPictureState extends State<ViewerPicture> {
       child: DefaultTextStyle(
         style: CupertinoTheme.of(context).textTheme.textStyle,
         child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
                       children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Center(
-                          child: Hero(
-                            tag: 'picture',
-                            transitionOnUserGestures: true,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                color: Color.fromRGBO(190, 190, 190, 0.1),
-                                child: widget.picture,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: Hero(
+                                tag: 'picture',
+                                transitionOnUserGestures: true,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    color: Color.fromRGBO(190, 190, 190, 0.1),
+                                    child: widget.picture,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(25),
-                          child: widget.identity ?? Container(),
+                            Padding(
+                              padding: EdgeInsets.all(25),
+                              child: widget.identity ?? Container(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.all(40),
+                    child: Text('Retour'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
-              CupertinoButton(
-                padding: EdgeInsets.all(40),
-                child: Text('Retour'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
+            ),
           ),
         ),
       ),

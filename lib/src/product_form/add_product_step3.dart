@@ -116,155 +116,162 @@ class _AddProductStep3State extends State<AddProductStep3> {
           ),
         ),
         child: SafeArea(
-          child: ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Tag scanner',
-                  help:
-                      "Ajouter ici le nom du produit tel qu'il est écrit sur l'emballage",
-                  body: CustomTextField(
-                    autofocus: false,
-                    isNullable: true,
-                    value: _tagPicture,
-                    controller: _controllerTagPicture,
-                    onChanged: (value) {
-                      setState(() {
-                        _tagPicture = value;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Tags du produit',
-                  paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  body: CustomSelectMultiple(
-                    key: Key("tagsMultiple"),
-                    initialValues: _tagsTmp,
-                    initialIds: _tagsIds,
-                    enabled: true,
-                    collectionPath: 'tags',
-                    onChanged: ({
-                      List<String> ids = const [],
-                      List<String> values = const [],
-                    }) {
-                      setState(() {
-                        _tagsIds = ids;
-                        _tagsTmp = values;
-                      });
-                    },
-                  ),
-                  help: 'Maintenez un tag pour le déplacer',
-                  paddingHelp: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Indications du produit',
-                  paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  body: CustomSelectMultiple(
-                    key: Key("indicationsMultiple"),
-                    initialValues: _indicationsTmp,
-                    initialIds: _indicationsIds,
-                    enabled: true,
-                    collectionPath: 'indications',
-                    onChanged: ({
-                      List<String> ids = const [],
-                      List<String> values = const [],
-                    }) {
-                      setState(() {
-                        _indicationsIds = ids;
-                        _indicationsTmp = values;
-                      });
-                    },
-                  ),
-                  help: 'Maintenez une indication pour la déplacer',
-                  paddingHelp: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Précautions du produit',
-                  body: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      border: Border.all(
-                        color: CupertinoColors.systemGrey,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Tag scanner',
+                      help:
+                          "Ajouter ici le nom du produit tel qu'il est écrit sur l'emballage",
+                      body: CustomTextField(
+                        autofocus: false,
+                        isNullable: true,
+                        value: _tagPicture,
+                        controller: _controllerTagPicture,
+                        onChanged: (value) {
+                          setState(() {
+                            _tagPicture = value;
+                          });
+                        },
                       ),
                     ),
-                    child: RichTextField(controller: _precautions),
                   ),
-                  help: 'Sautez une ligne entre les précautions',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Composition du produit',
-                  body: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      border: Border.all(
-                        color: CupertinoColors.systemGrey,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Tags du produit',
+                      paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      body: CustomSelectMultiple(
+                        key: Key("tagsMultiple"),
+                        initialValues: _tagsTmp,
+                        initialIds: _tagsIds,
+                        enabled: true,
+                        collectionPath: 'tags',
+                        onChanged: ({
+                          List<String> ids = const [],
+                          List<String> values = const [],
+                        }) {
+                          setState(() {
+                            _tagsIds = ids;
+                            _tagsTmp = values;
+                          });
+                        },
+                      ),
+                      help: 'Maintenez un tag pour le déplacer',
+                      paddingHelp: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Indications du produit',
+                      paddingTitle: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      body: CustomSelectMultiple(
+                        key: Key("indicationsMultiple"),
+                        initialValues: _indicationsTmp,
+                        initialIds: _indicationsIds,
+                        enabled: true,
+                        collectionPath: 'indications',
+                        onChanged: ({
+                          List<String> ids = const [],
+                          List<String> values = const [],
+                        }) {
+                          setState(() {
+                            _indicationsIds = ids;
+                            _indicationsTmp = values;
+                          });
+                        },
+                      ),
+                      help: 'Maintenez une indication pour la déplacer',
+                      paddingHelp: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Précautions du produit',
+                      body: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          border: Border.all(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                        ),
+                        child: RichTextField(controller: _precautions),
+                      ),
+                      help: 'Sautez une ligne entre les précautions',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Composition du produit',
+                      body: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          border: Border.all(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                        ),
+                        child: RichTextField(controller: _ingredients),
+                      ),
+                      help: 'Sautez une ligne entre les composants',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Mode d\'emploi du produit',
+                      body: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          border: Border.all(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                        ),
+                        child: RichTextField(controller: _cookbook),
+                      ),
+                      help: 'Sautez une ligne entre les étapes',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: CustomCupertinoFieldsGroup(
+                      title: 'Source',
+                      help:
+                          "Ajouter ici le lien vers les données du constructeur",
+                      body: CustomTextField(
+                        autofocus: false,
+                        isNullable: true,
+                        value: _source,
+                        controller: _controllerSource,
+                        onChanged: (value) {
+                          setState(() {
+                            _source = value;
+                          });
+                        },
                       ),
                     ),
-                    child: RichTextField(controller: _ingredients),
                   ),
-                  help: 'Sautez une ligne entre les composants',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Mode d\'emploi du produit',
-                  body: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      border: Border.all(
-                        color: CupertinoColors.systemGrey,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    child: Container(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        child: Text('Suivant'),
+                        onPressed: _submit,
+                        color: CupertinoTheme.of(context).primaryColor,
                       ),
                     ),
-                    child: RichTextField(controller: _cookbook),
                   ),
-                  help: 'Sautez une ligne entre les étapes',
-                ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: CustomCupertinoFieldsGroup(
-                  title: 'Source',
-                  help: "Ajouter ici le lien vers les données du constructeur",
-                  body: CustomTextField(
-                    autofocus: false,
-                    isNullable: true,
-                    value: _source,
-                    controller: _controllerSource,
-                    onChanged: (value) {
-                      setState(() {
-                        _source = value;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                child: Container(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text('Suivant'),
-                    onPressed: _submit,
-                    color: CupertinoTheme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

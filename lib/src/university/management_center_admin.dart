@@ -29,13 +29,13 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
         ),
       ),
       child: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 30, top: 25, right: 30, bottom: 20),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              constraints: BoxConstraints(maxWidth: 800),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 800),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 30, top: 25, right: 30, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
