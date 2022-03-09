@@ -112,9 +112,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Wrap(
-                    spacing: 30,
-                    runSpacing: 20,
+                  Column(
                     children: [
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
@@ -127,9 +125,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ),
                         ),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -175,6 +171,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ]),
                         ),
                       ),
+                      SizedBox(height: 20),
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
                         onPressed: () => Navigator.of(context).push(
@@ -186,9 +183,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ),
                         ),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -234,6 +229,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ]),
                         ),
                       ),
+                      SizedBox(height: 20),
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
                         onPressed: () => Navigator.of(context).push(
@@ -242,9 +238,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ),
                         ),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),

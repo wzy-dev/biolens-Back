@@ -81,6 +81,7 @@ class ManagementCenterUser extends StatelessWidget {
                     ),
                   ),
                   Material(
+                    color: Colors.transparent,
                     child: StreamBuilder<QuerySnapshot>(
                       stream: requests,
                       builder: (context, snapshotRequests) {
@@ -147,9 +148,7 @@ class ManagementCenterUser extends StatelessWidget {
                       },
                     ),
                   ),
-                  Wrap(
-                    spacing: 30,
-                    runSpacing: 20,
+                  Column(
                     children: [
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
@@ -158,9 +157,7 @@ class ManagementCenterUser extends StatelessWidget {
                                 builder: (context) => RequestAddProduct(
                                     university: this.university))),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -206,6 +203,7 @@ class ManagementCenterUser extends StatelessWidget {
                           ]),
                         ),
                       ),
+                      SizedBox(height: 20),
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
                         onPressed: () => Navigator.of(context).push(
@@ -213,9 +211,7 @@ class ManagementCenterUser extends StatelessWidget {
                                 builder: (context) => RequestEditProduct(
                                     university: this.university))),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -261,6 +257,7 @@ class ManagementCenterUser extends StatelessWidget {
                           ]),
                         ),
                       ),
+                      SizedBox(height: 20),
                       CupertinoButton(
                         padding: const EdgeInsets.all(0),
                         onPressed: () => Navigator.of(context).push(
@@ -268,9 +265,7 @@ class ManagementCenterUser extends StatelessWidget {
                                 builder: (context) => TechnicalPlatform(
                                     university: this.university))),
                         child: Container(
-                          width: MediaQuery.of(context).size.width > 900
-                              ? MediaQuery.of(context).size.width / 2 - 45
-                              : double.infinity,
+                          width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),

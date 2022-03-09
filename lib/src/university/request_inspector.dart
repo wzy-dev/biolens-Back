@@ -491,7 +491,6 @@ class _RequestInspectorState extends State<RequestInspector> {
                                                 padding: EdgeInsets.fromLTRB(
                                                     15, 0, 15, 0),
                                                 child: TextField(
-                                                  autofocus: true,
                                                   minLines: 5,
                                                   maxLines: 10,
                                                   controller:

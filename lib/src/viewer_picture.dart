@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 class ViewerPicture extends StatefulWidget {
   const ViewerPicture({
     Key? key,
+    required this.tag,
     required this.picture,
     this.identity,
   }) : super(key: key);
 
+  final String tag;
   final Image? picture;
   final Widget? identity;
 
@@ -38,7 +40,7 @@ class _ViewerPictureState extends State<ViewerPicture> {
                             ),
                             Center(
                               child: Hero(
-                                tag: 'picture',
+                                tag: widget.tag,
                                 transitionOnUserGestures: true,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),

@@ -67,6 +67,7 @@ class _PictureState extends State<Picture> {
                 Navigator.of(context).push(
                   CupertinoPageRoute(
                     builder: (context) => ViewerPicture(
+                      tag: "picture${widget.path}",
                       picture: _heroPicture,
                       identity: widget.identity,
                     ),
@@ -74,7 +75,7 @@ class _PictureState extends State<Picture> {
                 );
               },
               child: Hero(
-                tag: 'picture',
+                tag: "picture${widget.path}",
                 transitionOnUserGestures: true,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),

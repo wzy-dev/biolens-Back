@@ -202,7 +202,8 @@ class _AddProductStep3State extends State<AddProductStep3> {
                             color: CupertinoColors.systemGrey,
                           ),
                         ),
-                        child: RichTextField(controller: _precautions),
+                        child: RichTextField(
+                            focus: FocusNode(), controller: _precautions),
                       ),
                       help: 'Sautez une ligne entre les précautions',
                     ),
@@ -218,7 +219,8 @@ class _AddProductStep3State extends State<AddProductStep3> {
                             color: CupertinoColors.systemGrey,
                           ),
                         ),
-                        child: RichTextField(controller: _ingredients),
+                        child: RichTextField(
+                            focus: FocusNode(), controller: _ingredients),
                       ),
                       help: 'Sautez une ligne entre les composants',
                     ),
@@ -234,7 +236,8 @@ class _AddProductStep3State extends State<AddProductStep3> {
                             color: CupertinoColors.systemGrey,
                           ),
                         ),
-                        child: RichTextField(controller: _cookbook),
+                        child: RichTextField(
+                            focus: FocusNode(), controller: _cookbook),
                       ),
                       help: 'Sautez une ligne entre les étapes',
                     ),
@@ -282,43 +285,66 @@ class _AddProductStep3State extends State<AddProductStep3> {
 class RichTextField extends StatelessWidget {
   const RichTextField({
     Key? key,
+    required FocusNode focus,
     required TextEditingController? controller,
-  })  : _controller = controller,
+  })  : _focus = focus,
+        _controller = controller,
         super(key: key);
 
+  final FocusNode _focus;
   final TextEditingController? _controller;
 
   _addEffet(String nameEffect) {
     int start = _controller!.value.selection.start;
     int end = _controller!.value.selection.end;
 
-    if (_controller!.text.substring(start - (2 + nameEffect.length), start) ==
+    if (_controller!.text.substring(
+                start - (2 + nameEffect.length) >= 0
+                    ? start - (2 + nameEffect.length)
+                    : 0,
+                start) ==
             "[$nameEffect]" &&
         _controller!.text.substring(end, end + (3 + nameEffect.length)) ==
             "[/$nameEffect]") {
+      int nbMatches = RegExp("\\[/$nameEffect\\]\n\\[$nameEffect\\]")
+          .allMatches(_controller!.text.substring(start, end))
+          .length;
+
       String newString = _controller!.text.substring(start, end);
 
       _controller!.text = _controller!.text.replaceRange(
           start - (2 + nameEffect.length),
           end + (3 + nameEffect.length),
           newString);
+      _controller!.text = _controller!.text
+          .replaceAll(RegExp("\\[/$nameEffect\\]\n\\[$nameEffect\\]"), "\n");
+
+      _focus.requestFocus();
 
       _controller!.selection = TextSelection(
         baseOffset: start - (2 + nameEffect.length),
-        extentOffset: end - (2 + nameEffect.length),
+        extentOffset: end -
+            (2 + nameEffect.length) -
+            (nameEffect.length * 2 + 5) * nbMatches,
       );
 
       return;
     }
+    int nbMatches =
+        RegExp("\n").allMatches(_controller!.text.substring(start, end)).length;
 
     String newString =
-        "[$nameEffect]${_controller!.text.substring(start, end)}[/$nameEffect]";
+        "[$nameEffect]${_controller!.text.substring(start, end).replaceAll("\n", "[/$nameEffect]\n[$nameEffect]")}[/$nameEffect]";
 
     _controller!.text = _controller!.text.replaceRange(start, end, newString);
 
+    _focus.requestFocus();
+
     _controller!.selection = TextSelection(
       baseOffset: start + (2 + nameEffect.length),
-      extentOffset: end + (2 + nameEffect.length),
+      extentOffset: end +
+          (2 + nameEffect.length) +
+          (nameEffect.length * 2 + 5) * nbMatches,
     );
   }
 
@@ -339,6 +365,7 @@ class RichTextField extends StatelessWidget {
           style: TextStyle(
             color: CupertinoTheme.of(context).textTheme.textStyle.color,
           ),
+          focusNode: _focus,
         ),
         Divider(
           color: CupertinoColors.systemGrey2,

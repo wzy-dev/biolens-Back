@@ -24,3 +24,4 @@ export 'src/picture.dart';
 export 'src/about.dart';
 export 'src/privacy.dart';
 export 'src/export.dart';
+export 'src/signin.dart';
