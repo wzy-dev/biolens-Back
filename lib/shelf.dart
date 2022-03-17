@@ -8,6 +8,7 @@ export 'src/university/annotation.dart';
 export 'src/university/request_add_product.dart';
 export 'src/university/request_edit_product.dart';
 export 'src/university/requests_displayer.dart';
+export 'src/university/request_inspector.dart';
 export 'src/admin/products_list.dart';
 export 'src/admin/add_product.dart';
 export 'src/admin/edit_product.dart';

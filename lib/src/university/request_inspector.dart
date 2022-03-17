@@ -22,6 +22,7 @@ class RequestInspector extends StatefulWidget {
 
 class _RequestInspectorState extends State<RequestInspector> {
   late final Stream<DocumentSnapshot<Object?>> _streamRequest;
+  String? _savedFeedbacks;
 
   String? _universityName;
   final TextEditingController _feedbacksController = TextEditingController();
@@ -170,9 +171,11 @@ class _RequestInspectorState extends State<RequestInspector> {
                       ConnectionState.active) {
                     Map? requestMap = snapshotRequest.data?.data() as Map?;
                     if (requestMap == null) return SizedBox();
-                    if (requestMap["feedbacks"] != null)
-                      _feedbacksController.text =
-                          requestMap["feedbacks"].join('\n');
+                    if (requestMap["feedbacks"] != null &&
+                        _savedFeedbacks == null) {
+                      _savedFeedbacks = requestMap["feedbacks"].join('\n');
+                      _feedbacksController.text = _savedFeedbacks ?? "";
+                    }
 
                     List<String> _addedList =
                         List<String>.from(requestMap["addedList"] ?? []);
@@ -507,6 +510,8 @@ class _RequestInspectorState extends State<RequestInspector> {
                                                   decoration: InputDecoration(
                                                     border: InputBorder.none,
                                                   ),
+                                                  onChanged: (value) =>
+                                                      setState(() {}),
                                                 ),
                                               ),
                                             ),
@@ -521,24 +526,36 @@ class _RequestInspectorState extends State<RequestInspector> {
                                                         .primaryColor,
                                                 child: Icon(
                                                     CupertinoIcons.paperplane),
-                                                onPressed: () {
-                                                  FirebaseFirestore.instance
-                                                      .collection("requests")
-                                                      .doc(widget.request)
-                                                      .update({
-                                                    "editedAt": DateTime.now()
-                                                        .millisecondsSinceEpoch,
-                                                    "feedbacks":
+                                                onPressed: _savedFeedbacks ==
                                                         _feedbacksController
                                                             .text
-                                                            .split('\n')
-                                                            .where((element) =>
-                                                                element
-                                                                    .isEmpty ==
-                                                                false)
-                                                            .toList()
-                                                  });
-                                                },
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          _savedFeedbacks =
+                                                              _feedbacksController
+                                                                  .text;
+                                                        });
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                "requests")
+                                                            .doc(widget.request)
+                                                            .update({
+                                                          "editedAt": DateTime
+                                                                  .now()
+                                                              .millisecondsSinceEpoch,
+                                                          "feedbacks":
+                                                              _feedbacksController
+                                                                  .text
+                                                                  .split('\n')
+                                                                  .where((element) =>
+                                                                      element
+                                                                          .isEmpty ==
+                                                                      false)
+                                                                  .toList()
+                                                        });
+                                                      },
                                               ),
                                             )
                                           ],
