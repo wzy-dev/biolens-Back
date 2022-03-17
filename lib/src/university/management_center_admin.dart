@@ -22,10 +22,11 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text("Centre de gestion"),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: Text(
+          "Centre de gestion",
+          style: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
       child: SafeArea(
@@ -36,8 +37,7 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 30, top: 25, right: 30, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
@@ -52,239 +52,245 @@ class _ManagementCenterAdminState extends State<ManagementCenterAdmin> {
                           ),
                     ),
                   ),
-                  Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: requests,
-                      builder: (context, snapshotRequests) {
-                        if (snapshotRequests.connectionState ==
-                            ConnectionState.active) {
-                          List<QueryDocumentSnapshot<Object?>> requestsList =
-                              snapshotRequests.data?.docs ?? [];
+                  StreamBuilder<QuerySnapshot>(
+                    stream: requests,
+                    builder: (context, snapshotRequests) {
+                      if (snapshotRequests.connectionState ==
+                          ConnectionState.active) {
+                        List<QueryDocumentSnapshot<Object?>> requestsList =
+                            snapshotRequests.data?.docs ?? [];
 
-                          Future.delayed(
-                            Duration.zero,
-                            () => setState(
-                              () {
-                                _nbRequests = requestsList.length;
-                              },
-                            ),
-                          );
-
-                          List<Widget>? children = requestsList.map((e) {
-                            Map data = e.data() as Map;
-                            return RequestItem(
-                              data: data,
-                              requestId: e.id,
-                              admin: true,
-                            );
-                          }).toList();
-
-                          if (children.length == 0) children = null;
-
-                          return SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: children != null
-                                  ? children
-                                  : [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 40),
-                                        child: Text(
-                                          "Vous n'avez pas de requêtes en attente",
-                                          style: TextStyle(
-                                              color:
-                                                  CupertinoColors.systemGrey2),
-                                        ),
-                                      )
-                                    ],
-                            ),
-                          );
-                        }
-
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 15, bottom: 40),
-                            child: CupertinoActivityIndicator(),
+                        Future.delayed(
+                          Duration.zero,
+                          () => setState(
+                            () {
+                              _nbRequests = requestsList.length;
+                            },
                           ),
                         );
-                      },
-                    ),
+
+                        List<Widget>? children = requestsList.map((e) {
+                          Map data = e.data() as Map;
+                          return RequestItem(
+                            data: data,
+                            requestId: e.id,
+                            admin: true,
+                          );
+                        }).toList();
+
+                        if (children.length == 0) children = null;
+
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: children != null
+                                ? children
+                                : [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 40),
+                                      child: Text(
+                                        "Vous n'avez pas de requêtes en attente",
+                                        style: TextStyle(
+                                            color: CupertinoColors.systemGrey2),
+                                      ),
+                                    )
+                                  ],
+                          ),
+                        );
+                      }
+
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 40),
+                          child: CupertinoActivityIndicator(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 20),
-                  Column(
-                    children: [
-                      CupertinoButton(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () => Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) => RequestsDisplayer(
-                              state: RequestStates.treatment,
-                              admin: true,
-                            ),
-                          ),
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: Stack(children: [
-                            Container(
-                              height: 60,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(121, 143, 219, 1)),
-                              child: Center(
-                                  child: Icon(
-                                CupertinoIcons.person_circle,
-                                color: Color.fromARGB(255, 70, 76, 99),
-                                size: 30,
-                              )),
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                              left: 65,
-                              child: Container(
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 166, 181, 237),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
-                                ),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Voir les requêtes en cours de traitement"
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                        letterSpacing: 1.5,
-                                        color: Color.fromARGB(255, 70, 76, 99),
-                                      ),
-                                    )),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CupertinoButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: () => Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => RequestsDisplayer(
+                                state: RequestStates.treatment,
+                                admin: true,
                               ),
                             ),
-                          ]),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      CupertinoButton(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () => Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) => RequestsDisplayer(
-                              state: RequestStates.done,
-                              admin: true,
-                            ),
                           ),
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          child: Stack(children: [
-                            Container(
-                              height: 60,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(109, 177, 181, 1)),
-                              child: Center(
-                                  child: Icon(
-                                CupertinoIcons.checkmark_alt_circle,
-                                color: Color.fromARGB(255, 40, 65, 67),
-                                size: 30,
-                              )),
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                              left: 65,
-                              child: Container(
-                                padding: const EdgeInsets.all(15),
+                            clipBehavior: Clip.antiAlias,
+                            child: Stack(children: [
+                              Container(
+                                height: 60,
+                                width: 75,
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(134, 219, 224, 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
+                                    color: Color.fromRGBO(121, 143, 219, 1)),
+                                child: Center(
+                                    child: Icon(
+                                  CupertinoIcons.person_circle,
+                                  color: Color.fromARGB(255, 70, 76, 99),
+                                  size: 30,
+                                )),
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                left: 65,
+                                child: Container(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 166, 181, 237),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Voir les requêtes en cours de traitement"
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          letterSpacing: 1.5,
+                                          color:
+                                              Color.fromARGB(255, 70, 76, 99),
+                                        ),
+                                      )),
                                 ),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Voir les requêtes traitées"
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                        letterSpacing: 1.5,
-                                        color: Color.fromARGB(255, 40, 65, 67),
-                                      ),
-                                    )),
+                              ),
+                            ]),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        CupertinoButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: () => Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => RequestsDisplayer(
+                                state: RequestStates.done,
+                                admin: true,
                               ),
                             ),
-                          ]),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      CupertinoButton(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () => Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) => TechnicalPlatform(),
                           ),
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          child: Stack(children: [
-                            Container(
-                              height: 60,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(184, 147, 46, 1)),
-                              child: Center(
-                                  child: Icon(
-                                Icons.dashboard_rounded,
-                                color: Color.fromARGB(255, 99, 79, 25),
-                                size: 30,
-                              )),
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                              left: 65,
-                              child: Container(
-                                padding: const EdgeInsets.all(15),
+                            clipBehavior: Clip.hardEdge,
+                            child: Stack(children: [
+                              Container(
+                                height: 60,
+                                width: 75,
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(237, 190, 59, 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
-                                ),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Modifier un plateau technique"
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                        letterSpacing: 1.5,
-                                        color: Color.fromARGB(255, 99, 79, 25),
-                                      ),
-                                    )),
+                                    color: Color.fromRGBO(109, 177, 181, 1)),
+                                child: Center(
+                                    child: Icon(
+                                  CupertinoIcons.checkmark_alt_circle,
+                                  color: Color.fromARGB(255, 40, 65, 67),
+                                  size: 30,
+                                )),
                               ),
-                            ),
-                          ]),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                left: 65,
+                                child: Container(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(134, 219, 224, 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Voir les requêtes traitées"
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          letterSpacing: 1.5,
+                                          color:
+                                              Color.fromARGB(255, 40, 65, 67),
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ]),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 20),
+                        CupertinoButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: () => Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => TechnicalPlatform(),
+                            ),
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Stack(children: [
+                              Container(
+                                height: 60,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(184, 147, 46, 1)),
+                                child: Center(
+                                    child: Icon(
+                                  Icons.dashboard_rounded,
+                                  color: Color.fromARGB(255, 99, 79, 25),
+                                  size: 30,
+                                )),
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                left: 65,
+                                child: Container(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(237, 190, 59, 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Modifier un plateau technique"
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          letterSpacing: 1.5,
+                                          color:
+                                              Color.fromARGB(255, 99, 79, 25),
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

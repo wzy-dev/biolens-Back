@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class ViewerPicture extends StatefulWidget {
-  const ViewerPicture({
+class PictureInspector extends StatefulWidget {
+  const PictureInspector({
     Key? key,
     required this.tag,
     required this.picture,
@@ -13,10 +13,10 @@ class ViewerPicture extends StatefulWidget {
   final Widget? identity;
 
   @override
-  _ViewerPictureState createState() => _ViewerPictureState();
+  _PictureInspectorState createState() => _PictureInspectorState();
 }
 
-class _ViewerPictureState extends State<ViewerPicture> {
+class _PictureInspectorState extends State<PictureInspector> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(

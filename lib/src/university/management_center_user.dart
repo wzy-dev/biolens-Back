@@ -25,37 +25,18 @@ class ManagementCenterUser extends StatelessWidget {
         .snapshots();
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text("Centre de gestion"),
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CupertinoButton(
-              minSize: 25,
-              padding: EdgeInsets.zero,
-              onPressed: () => Navigator.of(context).pushNamed('/about'),
-              child: Icon(
-                CupertinoIcons.info_circle,
-                color: CupertinoTheme.of(context).primaryColor,
-                size: 25,
-              ),
-            ),
-            SizedBox(width: 10),
-            CupertinoButton(
-              minSize: 25,
-              padding: EdgeInsets.zero,
-              onPressed: () => FirebaseAuth.instance.signOut(),
-              child: Icon(
-                CupertinoIcons.person_crop_circle_badge_xmark,
-                color: CupertinoTheme.of(context).primaryColor,
-                size: 25,
-              ),
-            ),
-          ],
-        ),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: CustomNavigationBar.drawLogo(context),
+        trailingList: [
+          HeaderItem(
+              label: "A propos",
+              action: () => Navigator.of(context).pushNamed('/about')),
+          HeaderItem(
+              label: "Se déconnecter",
+              action: () => FirebaseAuth.instance.signOut(),
+              isDestructiveAction: true),
+        ],
       ),
       child: SafeArea(
         child: Align(

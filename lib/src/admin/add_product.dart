@@ -5,9 +5,10 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'product_form/add_product_step1.dart';
 import 'package:biolensback/shelf.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+import 'product_form/shelf_form.dart';
 
 class AddProduct extends StatefulWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:biolensback/src/fields/cupertino_select.dart';
+import 'package:biolensback/shelf.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +21,9 @@ class _RequestEditProductState extends State<RequestEditProduct> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text("Signaler un produit"),
-        ),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: Text("Signaler un produit"),
       ),
       child: SafeArea(
         child: Align(

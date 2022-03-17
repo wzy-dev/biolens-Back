@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:biolensback/shelf.dart';
 
 class Privacy extends StatelessWidget {
   const Privacy({Key? key, required this.canPop}) : super(key: key);
@@ -9,8 +10,9 @@ class Privacy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: canPop,
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        leading: canPop ? null : SizedBox(),
         middle: Text(
           "Contact et confidentialité",
         ),

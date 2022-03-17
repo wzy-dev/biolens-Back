@@ -8,7 +8,7 @@ class ProductViewerArguments {
   ProductViewerArguments({this.product});
 }
 
-class ProductViewer extends StatelessWidget {
+class ProductInspector extends StatelessWidget {
   List<TextSpan> _getTextSpanChildren(String stg) {
     RegExp matchesRegString = RegExp("(?=\\[(b|u|i)\\])|(?<=\\[\/(b|u|i)\\])");
     List<String> listWords = stg.split(matchesRegString).toList();
@@ -384,9 +384,8 @@ class ProductViewer extends StatelessWidget {
 
   CupertinoPageScaffold _drawScaffold(BuildContext context, Widget child) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Résumé'),
-      ),
+      navigationBar:
+          CustomNavigationBar.draw(context: context, middle: Text('Résumé')),
       child: DefaultTextStyle(
         style: CupertinoTheme.of(context).textTheme.textStyle,
         child: SafeArea(

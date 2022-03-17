@@ -18,12 +18,15 @@ class _AppLandingState extends State<AppLanding> {
 
   @override
   void initState() {
+    // On initialise un listener sur l'état de l'utilisateur
     FirebaseAuth.instance.authStateChanges().listen((user) {
+      // Si user == null on affiche un état déconnecté
       if (user == null) {
         setState(() => _roles = Roles.logout);
         return;
       }
 
+      // Si user != null on assigne le role et l'université de l'utilisateur
       FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
@@ -36,6 +39,31 @@ class _AppLandingState extends State<AppLanding> {
               }));
     });
     super.initState();
+  }
+
+  // On retourne un widget en fonction du role de l'utilisateur
+  Widget _permissionHandler({
+    required Roles role,
+    Widget? ifAdmin,
+    Widget? ifUniversity,
+  }) {
+    switch (role) {
+      case Roles.loading:
+        return CupertinoPageScaffold(
+            child: Center(child: CupertinoActivityIndicator()));
+      case Roles.admin:
+        if (ifAdmin != null) {
+          return ifAdmin;
+        }
+        return SignInPage();
+      case Roles.university:
+        if (_university != null && ifUniversity != null) {
+          return ifUniversity;
+        }
+        return SignInPage();
+      default:
+        return SignInPage();
+    }
   }
 
   @override
@@ -62,21 +90,24 @@ class _AppLandingState extends State<AppLanding> {
             ),
           ),
           routes: {
-            '/': (context) => _roles == Roles.loading
-                ? CupertinoPageScaffold(
-                    child: Center(child: CupertinoActivityIndicator()))
-                : _roles == Roles.admin
-                    ? StreamProduct()
-                    : _roles == Roles.university && _university != null
-                        ? ManagementCenterUser(university: _university!)
-                        : SignInPage(),
-            '/add': (context) => AddProduct(),
-            '/viewer': (context) => ProductViewer(),
-            '/university': (context) => ManagementCenterAdmin(),
+            '/': (context) => _permissionHandler(
+                  role: _roles,
+                  ifAdmin: AdminHomepage(),
+                  ifUniversity: _university != null
+                      ? ManagementCenterUser(university: _university!)
+                      : null,
+                ),
+            '/add': (context) =>
+                _permissionHandler(role: _roles, ifAdmin: AddProduct()),
+            '/viewer': (context) =>
+                _permissionHandler(role: _roles, ifAdmin: ProductInspector()),
+            '/university': (context) => _permissionHandler(
+                role: _roles, ifAdmin: ManagementCenterAdmin()),
             '/about': (context) => Privacy(canPop: true),
-            '/privacy': (context) => Privacy(canPop: false),
+            '/privacy': (context) => Privacy(canPop: false)
           },
           onGenerateRoute: (settings) {
+            // En cas de lien avec un argument
             final String path = settings.name!.split("/")[1];
             final arguments = RouteArgs(
                 arguments: settings.arguments,
@@ -85,20 +116,19 @@ class _AppLandingState extends State<AppLanding> {
 
             switch ("/" + path) {
               case "/viewer":
-                page = ProductViewer();
+                page = _permissionHandler(
+                  role: _roles,
+                  ifAdmin: ProductInspector(),
+                );
                 break;
               default:
-                page = _roles == Roles.loading
-                    ? Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: CupertinoColors.darkBackgroundGray,
-                        child: Center(child: CupertinoActivityIndicator()))
-                    : _roles == Roles.admin
-                        ? StreamProduct()
-                        : _roles == Roles.university && _university != null
-                            ? ManagementCenterUser(university: _university!)
-                            : SignInPage();
+                page = _permissionHandler(
+                  role: _roles,
+                  ifAdmin: AdminHomepage(),
+                  ifUniversity: _university != null
+                      ? ManagementCenterUser(university: _university!)
+                      : null,
+                );
             }
 
             return CupertinoPageRoute(

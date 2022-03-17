@@ -47,10 +47,10 @@ class _PictureState extends State<Picture> {
 
     _heroPicture = Image.network(
       downloadURL,
-      width: MediaQuery.of(context).size.width > 800
+      width: CustomNavigationBar.breakpoint(context)
           ? 800
           : MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.width > 800
+      height: CustomNavigationBar.breakpoint(context)
           ? 800
           : MediaQuery.of(context).size.width - 50,
       fit: BoxFit.cover,
@@ -66,7 +66,7 @@ class _PictureState extends State<Picture> {
               onPressed: () {
                 Navigator.of(context).push(
                   CupertinoPageRoute(
-                    builder: (context) => ViewerPicture(
+                    builder: (context) => PictureInspector(
                       tag: "picture${widget.path}",
                       picture: _heroPicture,
                       identity: widget.identity,

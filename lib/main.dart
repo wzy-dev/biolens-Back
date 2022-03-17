@@ -1,9 +1,10 @@
 import 'package:biolensback/src/app_landing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'config/configure_nonweb.dart'
+    if (dart.library.html) 'config/configure_web.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'config/firebase_options.dart';
 
 void main() {
   configureApp();
@@ -31,10 +32,10 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // Initialize FlutterFire:
+      // On initialise FlutterFire :
       future: _initialization,
       builder: (context, snapshot) {
-        // Check for errors
+        // Si erreurs
         if (snapshot.hasError) {
           return Container(
               width: double.infinity,
@@ -42,11 +43,12 @@ class _AppState extends State<App> {
               child: Center(child: Text('Error sync')));
         }
 
-        // Once complete, show your application
+        // On affiche le landing
         if (snapshot.connectionState == ConnectionState.done) {
           return AppLanding();
         }
-        // Otherwise, show something whilst waiting for initialization to complete
+
+        // Temps de chargement
         return Container(
           width: double.infinity,
           height: double.infinity,

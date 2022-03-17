@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:fuzzy/fuzzy.dart';
 
-class Search {
+class SearchProcess {
   static String escape(String query) {
     List<String> escapeList = [
       "(",

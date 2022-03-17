@@ -146,7 +146,7 @@ class _CustomSelectState extends State<CustomSelect> {
                     controller: ModalScrollController.of(context),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      child: ModalContent(
+                      child: ModalContentCustomSelect(
                           submit: _submit,
                           collectionPath: _collectionPath,
                           onChanged: widget.onChanged,
@@ -163,8 +163,8 @@ class _CustomSelectState extends State<CustomSelect> {
   }
 }
 
-class ModalContent extends StatefulWidget {
-  const ModalContent({
+class ModalContentCustomSelect extends StatefulWidget {
+  const ModalContentCustomSelect({
     required this.submit,
     required this.collectionPath,
     required this.onChanged,
@@ -179,10 +179,11 @@ class ModalContent extends StatefulWidget {
   final String? selectedId;
 
   @override
-  _ModalContentState createState() => _ModalContentState();
+  _ModalContentCustomSelectState createState() =>
+      _ModalContentCustomSelectState();
 }
 
-class _ModalContentState extends State<ModalContent> {
+class _ModalContentCustomSelectState extends State<ModalContentCustomSelect> {
   late TextEditingController _controllerSetter;
   String _query = '';
   late StreamBuilder<QuerySnapshot> _stream;
@@ -301,7 +302,8 @@ class _ModalContentState extends State<ModalContent> {
 
   Widget _modalContent(snapshot) {
     return StatefulBuilder(builder: (BuildContext context, setState) {
-      List _searchList = Search.searchByName(query: _query, snapshot: snapshot);
+      List _searchList =
+          SearchProcess.searchByName(query: _query, snapshot: snapshot);
       return Column(children: [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 15, 0, 0),

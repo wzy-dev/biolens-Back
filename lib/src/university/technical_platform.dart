@@ -34,13 +34,11 @@ class _TechnicalPlatformState extends State<TechnicalPlatform> {
         .equals(_productsSelected, _initialSelection);
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text(widget.university == null
-              ? "Mode universitaire"
-              : "Mon plateau technique"),
-        ),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: Text(widget.university == null
+            ? "Mode universitaire"
+            : "Mon plateau technique"),
       ),
       child: SafeArea(
         child: Align(

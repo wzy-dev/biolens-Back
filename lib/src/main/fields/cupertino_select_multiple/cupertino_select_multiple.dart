@@ -226,7 +226,7 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
               controller: ModalScrollController.of(context),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: ModalContent(
+                child: ModalContentCustomSelectMultiple(
                   add: _add,
                   delete: _delete,
                   rename: _rename,
@@ -243,8 +243,8 @@ class _CustomSelectMultipleState extends State<CustomSelectMultiple> {
   }
 }
 
-class ModalContent extends StatefulWidget {
-  const ModalContent({
+class ModalContentCustomSelectMultiple extends StatefulWidget {
+  const ModalContentCustomSelectMultiple({
     Key? key,
     required this.add,
     required this.delete,
@@ -262,10 +262,12 @@ class ModalContent extends StatefulWidget {
   final List<String> listValues;
 
   @override
-  _ModalContentState createState() => _ModalContentState();
+  _ModalContentCustomSelectMultipleState createState() =>
+      _ModalContentCustomSelectMultipleState();
 }
 
-class _ModalContentState extends State<ModalContent> {
+class _ModalContentCustomSelectMultipleState
+    extends State<ModalContentCustomSelectMultiple> {
   late TextEditingController _controllerSetter;
   String _query = '';
   late List<String> _listIds;
@@ -288,7 +290,7 @@ class _ModalContentState extends State<ModalContent> {
   }
 
   @override
-  void didUpdateWidget(ModalContent oldWidget) {
+  void didUpdateWidget(ModalContentCustomSelectMultiple oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _listIds = widget.listIds;
@@ -314,7 +316,8 @@ class _ModalContentState extends State<ModalContent> {
 
   Widget _modalContent(snapshot) {
     return StatefulBuilder(builder: (BuildContext context, setState) {
-      List _searchList = Search.searchByName(query: _query, snapshot: snapshot);
+      List _searchList =
+          SearchProcess.searchByName(query: _query, snapshot: snapshot);
       return Column(children: [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 15, 0, 0),

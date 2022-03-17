@@ -29,11 +29,9 @@ class RequestsDisplayer extends StatelessWidget {
             .snapshots();
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text("Mes requêtes"),
-        ),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: Text("Mes requêtes"),
       ),
       child: SafeArea(
         child: Align(

@@ -1,4 +1,4 @@
-import 'package:biolensback/src/university/management_center_user.dart';
+import 'package:biolensback/shelf.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -151,11 +151,9 @@ class _RequestInspectorState extends State<RequestInspector> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: Text("Inspecteur de requête"),
-        ),
+      navigationBar: CustomNavigationBar.draw(
+        context: context,
+        middle: Text("Inspecteur de requête"),
       ),
       child: SafeArea(
         child: Align(
