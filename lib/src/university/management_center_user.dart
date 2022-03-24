@@ -133,172 +133,46 @@ class ManagementCenterUser extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0),
-                          onPressed: () => Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => RequestAddProduct(
-                                      university: this.university))),
-                          child: Container(
-                            width: double.infinity,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Stack(children: [
-                              Container(
-                                height: 60,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(109, 177, 181, 1)),
-                                child: Center(
-                                    child: Icon(
-                                  Icons.add_rounded,
-                                  color: Color.fromARGB(255, 40, 65, 67),
-                                  size: 45,
-                                )),
-                              ),
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                left: 65,
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(134, 219, 224, 1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Demander l'ajout de produits"
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          letterSpacing: 1.5,
-                                          color:
-                                              Color.fromARGB(255, 40, 65, 67),
-                                        ),
-                                      )),
-                                ),
-                              ),
-                            ]),
+                        ManagementButton(
+                          target:
+                              RequestAddProduct(university: this.university),
+                          lightColor: Color.fromRGBO(134, 219, 224, 1),
+                          darkColor: Color.fromRGBO(109, 177, 181, 1),
+                          textColor: Color.fromARGB(255, 40, 65, 67),
+                          icon: Icon(
+                            Icons.add_rounded,
+                            color: Color.fromARGB(255, 40, 65, 67),
+                            size: 45,
                           ),
+                          label: "Demander l'ajout de produits",
                         ),
                         SizedBox(height: 20),
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0),
-                          onPressed: () => Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => RequestEditProduct(
-                                      university: this.university))),
-                          child: Container(
-                            width: double.infinity,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Stack(children: [
-                              Container(
-                                height: 60,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(184, 147, 46, 1)),
-                                child: Center(
-                                    child: Icon(
-                                  Icons.edit_rounded,
-                                  color: Color.fromARGB(255, 99, 79, 25),
-                                  size: 30,
-                                )),
-                              ),
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                left: 65,
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(237, 190, 59, 1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Demander la modification d'un produit"
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          letterSpacing: 1.5,
-                                          color:
-                                              Color.fromARGB(255, 99, 79, 25),
-                                        ),
-                                      )),
-                                ),
-                              ),
-                            ]),
+                        ManagementButton(
+                          target:
+                              RequestEditProduct(university: this.university),
+                          lightColor: Color.fromRGBO(237, 190, 59, 1),
+                          darkColor: Color.fromRGBO(184, 147, 46, 1),
+                          textColor: Color.fromARGB(255, 99, 79, 25),
+                          icon: Icon(
+                            Icons.edit_rounded,
+                            color: Color.fromARGB(255, 99, 79, 25),
+                            size: 30,
                           ),
+                          label: "Demander la modification d'un produit",
                         ),
                         SizedBox(height: 20),
-                        CupertinoButton(
-                          padding: const EdgeInsets.all(0),
-                          onPressed: () => Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                  builder: (context) => TechnicalPlatform(
-                                      university: this.university))),
-                          child: Container(
-                            width: double.infinity,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: Stack(children: [
-                              Container(
-                                height: 60,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(121, 143, 219, 1)),
-                                child: Center(
-                                    child: Icon(
-                                  Icons.dashboard_rounded,
-                                  color: Color.fromARGB(255, 70, 76, 99),
-                                  size: 30,
-                                )),
-                              ),
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                left: 65,
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 166, 181, 237),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Personnaliser mon plateau technique"
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          letterSpacing: 1.5,
-                                          color:
-                                              Color.fromARGB(255, 70, 76, 99),
-                                        ),
-                                      )),
-                                ),
-                              ),
-                            ]),
+                        ManagementButton(
+                          target:
+                              TechnicalPlatform(university: this.university),
+                          lightColor: Color.fromARGB(255, 166, 181, 237),
+                          darkColor: Color.fromRGBO(121, 143, 219, 1),
+                          textColor: Color.fromARGB(255, 70, 76, 99),
+                          icon: Icon(
+                            Icons.dashboard_rounded,
+                            color: Color.fromARGB(255, 70, 76, 99),
+                            size: 30,
                           ),
+                          label: "Personnaliser mon plateau technique",
                         ),
                       ],
                     ),
@@ -336,13 +210,13 @@ class RequestItem extends StatelessWidget {
         );
       case RequestStates.treatment:
         return Icon(
-          CupertinoIcons.person_circle,
+          Icons.account_circle_outlined,
           color: CupertinoColors.activeBlue,
           size: 35,
         );
       case RequestStates.done:
         return Icon(
-          CupertinoIcons.checkmark_alt_circle,
+          Icons.check_circle_outline_rounded,
           color: CupertinoColors.activeGreen,
           size: 35,
         );

@@ -12,6 +12,7 @@ export 'src/university/request_inspector.dart';
 export 'src/admin/products_list.dart';
 export 'src/admin/add_product.dart';
 export 'src/admin/edit_product.dart';
+export 'src/admin/users_manager.dart';
 export 'src/main/fields/cupertino_text_field.dart';
 export 'src/main/fields/cupertino_select/cupertino_select.dart';
 export 'src/main/fields/cupertino_select_multiple/cupertino_select_multiple.dart';

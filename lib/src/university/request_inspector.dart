@@ -55,13 +55,13 @@ class _RequestInspectorState extends State<RequestInspector> {
         );
       case RequestStates.treatment:
         return Icon(
-          CupertinoIcons.person_circle,
+          Icons.account_circle_outlined,
           color: CupertinoColors.activeBlue,
           size: sizeIcon,
         );
       case RequestStates.done:
         return Icon(
-          CupertinoIcons.checkmark_alt_circle,
+          Icons.check_circle_outline_rounded,
           color: CupertinoColors.activeGreen,
           size: sizeIcon,
         );
@@ -293,8 +293,7 @@ class _RequestInspectorState extends State<RequestInspector> {
                                                                     .only(
                                                                 right: 5.0),
                                                         child: Icon(
-                                                          CupertinoIcons
-                                                              .check_mark,
+                                                          Icons.done_outline,
                                                           color: CupertinoColors
                                                               .activeGreen,
                                                           size: 15,

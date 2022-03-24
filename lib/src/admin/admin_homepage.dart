@@ -92,8 +92,13 @@ class _AdminHomepageState extends State<AdminHomepage> {
               trailingList: [
                 HeaderItem(
                   label: "Mode universitaire",
-                  action: () => Navigator.of(context).pushNamed('/university'),
+                  action: () =>
+                      Navigator.of(context).pushNamed('/universities'),
                   isDefaultAction: true,
+                ),
+                HeaderItem(
+                  label: "Gestion des utilisateurs",
+                  action: () => Navigator.of(context).pushNamed('/users'),
                 ),
                 _drawExport(snapshot),
                 HeaderItem(

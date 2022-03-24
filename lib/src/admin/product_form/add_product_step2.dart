@@ -149,7 +149,7 @@ class _AddProductStep2State extends State<AddProductStep2> {
                                 _subCategoryId = id;
                               });
                             },
-                            onChangedId: ({required String id}) {
+                            onChangedId: ({String? id}) {
                               _subCategoryId = id;
                             },
                           )),

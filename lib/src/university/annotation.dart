@@ -17,9 +17,6 @@ class Annotation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AnnotationArguments args =
-    //     ModalRoute.of(context)!.settings.arguments as AnnotationArguments;
-
     final Future<DocumentSnapshot> _product = FirebaseFirestore.instance
         .collection('products')
         .doc(args.product)
@@ -116,7 +113,6 @@ class Annotation extends StatelessWidget {
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                   ),
-                                  // cursorColor: _cursorColor(context, value),
                                 ),
                               ),
                               Container(

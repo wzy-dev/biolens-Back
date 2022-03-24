@@ -101,8 +101,10 @@ class _AppLandingState extends State<AppLanding> {
                 _permissionHandler(role: _roles, ifAdmin: AddProduct()),
             '/viewer': (context) =>
                 _permissionHandler(role: _roles, ifAdmin: ProductInspector()),
-            '/university': (context) => _permissionHandler(
+            '/universities': (context) => _permissionHandler(
                 role: _roles, ifAdmin: ManagementCenterAdmin()),
+            '/users': (context) =>
+                _permissionHandler(role: _roles, ifAdmin: UsersManager()),
             '/about': (context) => Privacy(canPop: true),
             '/privacy': (context) => Privacy(canPop: false)
           },
