@@ -3,14 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HeaderItem {
-  const HeaderItem(
-      {required this.label,
-      required this.action,
-      this.webOnly = false,
-      this.isDefaultAction = false,
-      this.isDestructiveAction = false});
+  const HeaderItem({
+    required this.label,
+    this.icon,
+    required this.action,
+    this.webOnly = false,
+    this.isDefaultAction = false,
+    this.isDestructiveAction = false,
+  });
 
   final String label;
+  final IconData? icon;
   final Function() action;
   final bool webOnly;
   final bool isDefaultAction;
@@ -18,21 +21,15 @@ class HeaderItem {
 }
 
 class CustomNavigationBar {
-  static bool isDesktopWidth(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
-    return screenWidth > 800;
-  }
-
   static bool breakpoint(BuildContext context) =>
-      MediaQuery.of(context).size.width > 800;
+      MediaQuery.of(context).size.width > 900;
 
   static Widget drawLogo(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: SvgPicture.asset(
         'assets/logo.svg',
-        width: isDesktopWidth(context) ? 100 : null,
+        width: breakpoint(context) ? 100 : null,
         semanticsLabel: 'biolens',
         color: CupertinoTheme.of(context).primaryColor,
       ),
@@ -47,7 +44,7 @@ class CustomNavigationBar {
     Widget? trailingOnly,
   }) {
     return CupertinoNavigationBar(
-      leading: isDesktopWidth(context)
+      leading: breakpoint(context)
           ? leading != null
               ? Align(alignment: Alignment.centerLeft, child: middle)
               : Navigator.of(context).canPop()
@@ -61,10 +58,10 @@ class CustomNavigationBar {
               : Navigator.of(context).canPop()
                   ? null
                   : Container(width: 50, child: leading),
-      middle: leading != null && isDesktopWidth(context) ? SizedBox() : middle,
+      middle: leading != null && breakpoint(context) ? SizedBox() : middle,
       trailing: trailingOnly != null
           ? trailingOnly
-          : isDesktopWidth(context)
+          : breakpoint(context)
               ? Padding(
                   padding: const EdgeInsets.only(top: 3.0),
                   child: Row(
@@ -78,16 +75,25 @@ class CustomNavigationBar {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 15),
                             onPressed: () => e.action(),
-                            child: Text(
-                              e.label,
-                              style: TextStyle(
-                                fontWeight:
-                                    e.isDefaultAction ? FontWeight.w900 : null,
-                                color: e.isDestructiveAction
-                                    ? CupertinoColors.destructiveRed
-                                    : null,
-                              ),
-                            ),
+                            child: e.icon != null
+                                ? Icon(
+                                    e.icon!,
+                                    color: e.isDestructiveAction
+                                        ? CupertinoColors.destructiveRed
+                                        : null,
+                                    semanticLabel: e.label,
+                                  )
+                                : Text(
+                                    e.label,
+                                    style: TextStyle(
+                                      fontWeight: e.isDefaultAction
+                                          ? FontWeight.w900
+                                          : null,
+                                      color: e.isDestructiveAction
+                                          ? CupertinoColors.destructiveRed
+                                          : null,
+                                    ),
+                                  ),
                           ),
                         )
                         .toList(),

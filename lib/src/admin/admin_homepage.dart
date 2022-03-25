@@ -107,6 +107,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
                 ),
                 HeaderItem(
                   label: "Se déconnecter",
+                  icon: CupertinoIcons.person_crop_circle_badge_xmark,
                   action: () => FirebaseAuth.instance.signOut(),
                   isDestructiveAction: true,
                 ),

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
@@ -560,32 +561,39 @@ class _UserFormState extends State<UserForm> {
                           ),
                         ),
                         Expanded(
-                          child: CupertinoPicker(
-                            itemExtent: 60,
-                            scrollController: FixedExtentScrollController(
-                                initialItem: _addedUniversityIndex),
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                _addedUniversityIndex = index;
-                              });
-                            },
-                            children: [
-                              ...widget.listUniversities.map(
-                                (university) => Container(
-                                  height: 60,
-                                  child: Center(
-                                    child: Text(
-                                      (university.data() as Map)["name"],
-                                      style: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .copyWith(
-                                              fontWeight: FontWeight.bold),
+                          child: ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context)
+                                .copyWith(dragDevices: {
+                              PointerDeviceKind.touch,
+                              PointerDeviceKind.mouse,
+                            }),
+                            child: CupertinoPicker(
+                              itemExtent: 60,
+                              scrollController: FixedExtentScrollController(
+                                  initialItem: _addedUniversityIndex),
+                              onSelectedItemChanged: (index) {
+                                setState(() {
+                                  _addedUniversityIndex = index;
+                                });
+                              },
+                              children: [
+                                ...widget.listUniversities.map(
+                                  (university) => Container(
+                                    height: 60,
+                                    child: Center(
+                                      child: Text(
+                                        (university.data() as Map)["name"],
+                                        style: CupertinoTheme.of(context)
+                                            .textTheme
+                                            .textStyle
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -593,7 +601,7 @@ class _UserFormState extends State<UserForm> {
                   );
                 }),
             child: Container(
-              height: _addedRole == Roles.university ? 40 : 0,
+              height: _addedRole == Roles.university ? 50 : 0,
               width: double.infinity,
               margin: _addedRole == Roles.university
                   ? const EdgeInsets.only(top: 8)
@@ -636,7 +644,7 @@ class _UserFormState extends State<UserForm> {
           ),
         ),
         Container(
-          height: 40,
+          height: 50,
           margin: const EdgeInsets.only(top: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -645,22 +653,25 @@ class _UserFormState extends State<UserForm> {
             ),
           ),
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: TextField(
-            controller: _addedEmailController,
-            enabled: widget.userData == null,
-            minLines: 1,
-            maxLines: 1,
-            onChanged: (value) => setState(() {}),
-            style: TextStyle(
-              color: widget.userData == null
-                  ? CupertinoTheme.of(context).textTheme.textStyle.color
-                  : CupertinoColors.systemGrey,
-              fontSize: 16,
-            ),
-            decoration: InputDecoration(
-              hintText: "utilisateur@email.com",
-              hintStyle: TextStyle(color: CupertinoColors.systemGrey),
-              border: InputBorder.none,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              controller: _addedEmailController,
+              enabled: widget.userData == null,
+              minLines: 1,
+              maxLines: 1,
+              onChanged: (value) => setState(() {}),
+              style: TextStyle(
+                color: widget.userData == null
+                    ? CupertinoTheme.of(context).textTheme.textStyle.color
+                    : CupertinoColors.systemGrey,
+                fontSize: 16,
+              ),
+              decoration: InputDecoration(
+                hintText: "utilisateur@email.com",
+                hintStyle: TextStyle(color: CupertinoColors.systemGrey),
+                border: InputBorder.none,
+              ),
             ),
           ),
         ),

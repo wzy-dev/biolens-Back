@@ -67,10 +67,12 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                                   children: [
                                     Icon(
                                       CupertinoIcons.arrowtriangle_down_circle,
-                                      color: CupertinoTheme.of(context)
-                                          .textTheme
-                                          .textStyle
-                                          .color,
+                                      color: data["enabled"]
+                                          ? CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle
+                                              .color
+                                          : CupertinoColors.systemGrey,
                                       size: 20,
                                     ),
                                     SizedBox(width: 12),
@@ -80,7 +82,14 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                                           .textTheme
                                           .textStyle
                                           .copyWith(
-                                              fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            color: data["enabled"]
+                                                ? CupertinoTheme.of(context)
+                                                    .textTheme
+                                                    .textStyle
+                                                    .color
+                                                : CupertinoColors.systemGrey,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -154,7 +163,7 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                                                                       .stretch,
                                                               children: [
                                                                 Container(
-                                                                  height: 40,
+                                                                  height: 50,
                                                                   margin: const EdgeInsets
                                                                           .only(
                                                                       top: 8),
@@ -176,34 +185,39 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                                                                           0,
                                                                           15,
                                                                           0),
-                                                                  child:
-                                                                      TextField(
-                                                                    minLines: 1,
-                                                                    maxLines: 1,
-                                                                    controller:
-                                                                        _renameController,
-                                                                    onChanged: (value) =>
-                                                                        setState(
-                                                                            () {}),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: CupertinoTheme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .textStyle
-                                                                          .color,
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      hintText:
-                                                                          "Nom de l'université",
-                                                                      hintStyle:
+                                                                  child: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    child:
+                                                                        TextField(
+                                                                      minLines:
+                                                                          1,
+                                                                      maxLines:
+                                                                          1,
+                                                                      controller:
+                                                                          _renameController,
+                                                                      onChanged:
+                                                                          (value) =>
+                                                                              setState(() {}),
+                                                                      style:
                                                                           TextStyle(
-                                                                              color: CupertinoColors.systemGrey),
-                                                                      border: InputBorder
-                                                                          .none,
+                                                                        color: CupertinoTheme.of(context)
+                                                                            .textTheme
+                                                                            .textStyle
+                                                                            .color,
+                                                                        fontSize:
+                                                                            16,
+                                                                      ),
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        hintText:
+                                                                            "Nom de l'université",
+                                                                        hintStyle:
+                                                                            TextStyle(color: CupertinoColors.systemGrey),
+                                                                        border:
+                                                                            InputBorder.none,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -340,7 +354,7 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    height: 40,
+                    height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
@@ -348,22 +362,26 @@ class _UniversitiesManagerState extends State<UniversitiesManager> {
                       ),
                     ),
                     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 1,
-                      controller: _toAddController,
-                      onChanged: (value) => setState(() {}),
-                      style: TextStyle(
-                        color: CupertinoTheme.of(context)
-                            .textTheme
-                            .textStyle
-                            .color,
-                        fontSize: 16,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Nom de l'université",
-                        hintStyle: TextStyle(color: CupertinoColors.systemGrey),
-                        border: InputBorder.none,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 1,
+                        controller: _toAddController,
+                        onChanged: (value) => setState(() {}),
+                        style: TextStyle(
+                          color: CupertinoTheme.of(context)
+                              .textTheme
+                              .textStyle
+                              .color,
+                          fontSize: 16,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Nom de l'université",
+                          hintStyle:
+                              TextStyle(color: CupertinoColors.systemGrey),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
