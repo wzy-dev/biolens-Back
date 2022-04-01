@@ -1,4 +1,5 @@
 import 'package:biolensback/shelf.dart';
+import 'package:biolensback/src/editor/editor_homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,11 +43,11 @@ class _AppLandingState extends State<AppLanding> {
   }
 
   // On retourne un widget en fonction du role de l'utilisateur
-  Widget _permissionHandler({
-    required Roles role,
-    Widget? ifAdmin,
-    Widget? ifUniversity,
-  }) {
+  Widget _permissionHandler(
+      {required Roles role,
+      Widget? ifAdmin,
+      Widget? ifUniversity,
+      Widget? ifEditor}) {
     switch (role) {
       case Roles.loading:
         return CupertinoPageScaffold(
@@ -59,6 +60,11 @@ class _AppLandingState extends State<AppLanding> {
       case Roles.university:
         if (_university != null && ifUniversity != null) {
           return ifUniversity;
+        }
+        return SignInPage();
+      case Roles.editor:
+        if (ifEditor != null) {
+          return ifEditor;
         }
         return SignInPage();
       default:
@@ -96,11 +102,15 @@ class _AppLandingState extends State<AppLanding> {
                   ifUniversity: _university != null
                       ? ManagementCenterUser(university: _university!)
                       : null,
+                  ifEditor: EditorHomepage(),
                 ),
-            '/add': (context) =>
-                _permissionHandler(role: _roles, ifAdmin: AddProduct()),
-            '/viewer': (context) =>
-                _permissionHandler(role: _roles, ifAdmin: ProductInspector()),
+            '/add': (context) => _permissionHandler(
+                role: _roles, ifAdmin: AddProduct(), ifEditor: AddProduct()),
+            '/viewer': (context) => _permissionHandler(
+                  role: _roles,
+                  ifAdmin: ProductInspector(),
+                  ifEditor: ProductInspector(),
+                ),
             '/universities': (context) => _permissionHandler(
                 role: _roles, ifAdmin: ManagementCenterAdmin()),
             '/users': (context) =>
@@ -121,6 +131,7 @@ class _AppLandingState extends State<AppLanding> {
                 page = _permissionHandler(
                   role: _roles,
                   ifAdmin: ProductInspector(),
+                  ifEditor: ProductInspector(),
                 );
                 break;
               default:
@@ -130,6 +141,7 @@ class _AppLandingState extends State<AppLanding> {
                   ifUniversity: _university != null
                       ? ManagementCenterUser(university: _university!)
                       : null,
+                  ifEditor: EditorHomepage(),
                 );
             }
 

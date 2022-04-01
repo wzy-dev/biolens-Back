@@ -18,7 +18,7 @@ void main() {
   ));
 }
 
-enum Roles { loading, logout, university, admin }
+enum Roles { loading, logout, university, admin, editor }
 
 class App extends StatefulWidget {
   @override
