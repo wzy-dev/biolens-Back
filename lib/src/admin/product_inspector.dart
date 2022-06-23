@@ -403,44 +403,36 @@ class ProductInspector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RouteArgs? routeArgs =
-        ModalRoute.of(context)!.settings.arguments as RouteArgs;
-    final ProductViewerArguments? arguments =
-        routeArgs?.arguments as ProductViewerArguments?;
-    final Map? productArg = arguments?.product ?? null;
-    final String? idParam = routeArgs?.parameter;
+    final String? idParam =
+        ModalRoute.of(context)!.settings.arguments as String?;
 
-    if (productArg == null) {
-      CollectionReference products =
-          FirebaseFirestore.instance.collection('products');
+    CollectionReference products =
+        FirebaseFirestore.instance.collection('products');
 
-      return FutureBuilder<DocumentSnapshot>(
-        future: products.doc(idParam).get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return _drawScaffold(
-                context, Center(child: Text("Une erreur est survenue")));
-          }
-
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            return _drawScaffold(
-                context, Center(child: Text("Ce document n'existe pas")));
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            data['id'] = idParam;
-            return _drawScaffold(context, _drawViewer(context, data));
-          }
-
+    return FutureBuilder<DocumentSnapshot>(
+      future: products.doc(idParam).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
           return _drawScaffold(
-              context, Center(child: CupertinoActivityIndicator()));
-        },
-      );
-    }
+              context, Center(child: Text("Une erreur est survenue")));
+        }
 
-    return _drawScaffold(context, _drawViewer(context, productArg));
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return _drawScaffold(
+              context, Center(child: Text("Ce document n'existe pas")));
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          data['id'] = idParam;
+          return _drawScaffold(context, _drawViewer(context, data));
+        }
+
+        return _drawScaffold(
+            context, Center(child: CupertinoActivityIndicator()));
+      },
+    );
   }
 }

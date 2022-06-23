@@ -57,7 +57,8 @@ class _EditProductState extends State<EditProduct> {
     if (file != null) {
       firebase_storage.FirebaseStorage.instance
           .ref('uploads/' + filename)
-          .putFile(file)
+          .putFile(
+              file, firebase_storage.SettableMetadata(contentType: 'image/png'))
           .then((e) {
         setState(() {
           _completeUpload = true;
@@ -66,8 +67,8 @@ class _EditProductState extends State<EditProduct> {
     } else {
       firebase_storage.FirebaseStorage.instance
           .ref('uploads/' + filename)
-          .putData(uint8List)
-          // .putString(base64, format: firebase_storage.PutStringFormat.base64)
+          .putData(uint8List,
+              firebase_storage.SettableMetadata(contentType: 'image/png'))
           .then((e) {
         setState(() {
           _completeUpload = true;

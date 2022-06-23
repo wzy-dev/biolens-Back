@@ -140,6 +140,32 @@ class _AddProductStep1State extends State<AddProductStep1> {
                           });
                         },
                       ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                CupertinoIcons.info_circle,
+                                color: CupertinoColors.inactiveGray,
+                                size: 15,
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "Téléchargez un .png carré d'environ 500 pixels de large par 500 pixels de long",
+                                style: TextStyle(
+                                  color: CupertinoColors.inactiveGray,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       CustomCupertinoFieldsGroup(
                         title: 'Nom du produit',
                         body: CustomTextField(

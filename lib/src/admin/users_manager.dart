@@ -37,103 +37,111 @@ class _UsersManagerState extends State<UsersManager> {
       navigationBar: CustomNavigationBar.draw(
           context: context, middle: Text("Modifier un utilisateur")),
       child: SafeArea(
+          child: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 800),
           child: FutureBuilder<QuerySnapshot>(
-        future: _futureListUniversities,
-        builder: (context, snapshotUniversities) {
-          if (snapshotUniversities.connectionState != ConnectionState.done)
-            return Center(
-              child: CupertinoActivityIndicator(),
-            );
+            future: _futureListUniversities,
+            builder: (context, snapshotUniversities) {
+              if (snapshotUniversities.connectionState != ConnectionState.done)
+                return Center(
+                  child: CupertinoActivityIndicator(),
+                );
 
-          List<QueryDocumentSnapshot> _listUniversities =
-              snapshotUniversities.data!.docs;
-          return StreamBuilder<QuerySnapshot>(
-            stream: _streamUsers,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                List<QueryDocumentSnapshot> users = snapshot.data?.docs
-                        .where((doc) =>
-                            doc.id != FirebaseAuth.instance.currentUser!.uid)
-                        .toList() ??
-                    [];
+              List<QueryDocumentSnapshot> _listUniversities =
+                  snapshotUniversities.data!.docs;
+              return StreamBuilder<QuerySnapshot>(
+                stream: _streamUsers,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    List<QueryDocumentSnapshot> users = snapshot.data?.docs
+                            .where((doc) =>
+                                doc.id !=
+                                FirebaseAuth.instance.currentUser!.uid)
+                            .toList() ??
+                        [];
 
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: users.map(
-                              (user) {
-                                Map data = user.data() as Map;
-                                return CupertinoButton(
-                                  alignment: Alignment.centerLeft,
-                                  minSize: 0,
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    _showBottomModal(context,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: users.map(
+                                  (user) {
+                                    Map data = user.data() as Map;
+                                    return CupertinoButton(
+                                      alignment: Alignment.centerLeft,
+                                      minSize: 0,
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        _showBottomModal(context,
+                                            enabled: data["enabled"],
+                                            email: data["email"],
+                                            role: data["role"],
+                                            universityId: data["university"],
+                                            userId: user.id,
+                                            listUniversities:
+                                                _listUniversities);
+                                      },
+                                      child: UserContainer(
                                         enabled: data["enabled"],
                                         email: data["email"],
                                         role: data["role"],
                                         universityId: data["university"],
                                         userId: user.id,
-                                        listUniversities: _listUniversities);
+                                        listUniversities: _listUniversities,
+                                      ),
+                                    );
                                   },
-                                  child: UserContainer(
-                                    enabled: data["enabled"],
-                                    email: data["email"],
-                                    role: data["role"],
-                                    universityId: data["university"],
-                                    userId: user.id,
-                                    listUniversities: _listUniversities,
-                                  ),
-                                );
-                              },
-                            ).toList(),
+                                ).toList(),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Divider(
-                        height: 1,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Ajouter un utilisateur",
-                            style: CupertinoTheme.of(context)
-                                .textTheme
-                                .textStyle
-                                .copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
+                          SizedBox(height: 10),
+                          Divider(
+                            height: 1,
+                            color: CupertinoColors.systemGrey,
                           ),
-                        ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                "Ajouter un utilisateur",
+                                style: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            color: CupertinoColors.systemGrey,
+                          ),
+                          SizedBox(height: 10),
+                          UserForm(
+                            listUniversities: _listUniversities,
+                          ),
+                        ],
                       ),
-                      Divider(
-                        height: 1,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      SizedBox(height: 10),
-                      UserForm(
-                        listUniversities: _listUniversities,
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return Center(
-                child: CupertinoActivityIndicator(),
+                    );
+                  }
+                  return Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+        ),
       )),
     );
   }

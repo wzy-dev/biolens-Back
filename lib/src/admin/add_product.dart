@@ -26,7 +26,7 @@ class _AddProductState extends State<AddProduct> {
       File? file}) async {
     if (file != null) {
       firebase_storage.FirebaseStorage.instance
-          .ref('uploads/' + filename)
+          .ref('uploads/' + filename + ".png")
           .putFile(file)
           .then((e) {
         setState(() {
@@ -36,8 +36,8 @@ class _AddProductState extends State<AddProduct> {
     } else {
       firebase_storage.FirebaseStorage.instance
           .ref('uploads/' + filename)
-          // .putString(uint8List, format: firebase_storage.PutStringFormat.base64)
-          .putData(uint8List)
+          .putData(uint8List,
+              firebase_storage.SettableMetadata(contentType: 'image/png'))
           .then((e) {
         setState(() {
           _completeUpload = true;

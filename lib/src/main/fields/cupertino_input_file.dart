@@ -65,7 +65,16 @@ class _CupertinoInputFileState extends State<CupertinoInputFile> {
     );
 
     String uuid = Uuid().v4();
-    String extension = path.extension(image!.path);
+    String extension = path.extension(image!.name);
+
+    if (extension != ".png") {
+      setState(() {
+        _picture = null;
+        _loader = false;
+      });
+      return;
+    }
+
     String filename = uuid + extension;
     Uint8List uint8List = await image.readAsBytes();
     File? file;
